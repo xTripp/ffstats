@@ -1,0 +1,14 @@
+.league-info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 32px;
+}
+
+.league-subinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-top: 20px;
+    font-size: 20px;
+}

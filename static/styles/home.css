@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #1A237E;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.content-container {
+    position: relative;
+    width: 60%;
+    min-height: calc(100vh - 50px);
+    height: auto;
+    background: url(../images/paper.jpg) repeat-y center top;
+    background-size: contain;
+    margin-top: 50px;
+    --mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50%/20px 100%;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+}
+
+.content {
+    padding: 50px 20px;
+}

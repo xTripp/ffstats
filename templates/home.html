@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>{{name}} League Stats</title>
-        <link rel="stylesheet" type="text/css" href="../styles/home.css"/>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ name }} League Stats</title>
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home.css') }}">
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home_content.css') }}">
     </head>
     <body>
-        <h1>League {{name}}</h1>
+        <div class="content-container">
+            <div class="content">
+                <div class="league-info">
+                    <h1>League {{ name }}</h1>
+                    <div class="league-subinfo">
+                        <form method="get" action="/season_select">
+                            <select id="season" name="season" onchange="this.form.submit()">
+                                {% for season in seasons %}
+                                    {% set index = loop.index %}
+                                    <option value="{{ season }}" {% if season == season %}selected{% endif %}>
+                                        Season {{ index }} ({{ season }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                        <h2>{{ team_count }} teams</h2>
+                        <h2>
+                            Previous Champion: 
+                            {% if previous_winner %}
+                                {{ previous_winner[0] }} ({{ previous_winner[1][0] }}-{{ previous_winner[1][2] }}-{{ previous_winner[1][1] }})
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
