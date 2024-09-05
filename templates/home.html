@@ -9,9 +9,8 @@
         <script>
             function updateFormAction() {
                 var seasonSelect = document.getElementById('season');
-                var selectedYear = seasonSelect.value;
-                var form = document.getElementById('seasonForm');
-                form.action = '/season/' + selectedYear;
+                var form = document.getElementById('seasonSelect');
+                form.action = '/season/' + seasonSelect.value;
                 form.submit();
             }
         </script>
@@ -22,7 +21,7 @@
                 <div class="league-info">
                     <h1>League {{ name }}</h1>
                     <div class="league-subinfo">
-                        <form id="seasonForm" method="get" onsubmit="updateFormAction(); return false;">
+                        <form id="seasonSelect" method="get" onsubmit="updateFormAction(); return false;">
                             <select id="season" name="season" onchange="updateFormAction()">
                                 {% for season in seasons %}
                                     {% set index = loop.index %}
@@ -41,6 +40,23 @@
                                 N/A
                             {% endif %}
                         </h2>
+                    </div>
+                </div>
+                <div class="power-rankings-container">
+                    <h1>Power Rankings</h1>
+                    <div class="power-rankings">
+                        {% for team in power_rankings %}
+                            {% set index = loop.index %}
+                            {% if index == 1 %}
+                                <h1 class="pr-1">{{team[1].team_name}} ({{team[0]}})</h1>
+                            {% elif index == 2 %}
+                                <h2 class="pr-2">{{team[1].team_name}} ({{team[0]}})</h2>
+                            {% elif index == 3 %}
+                                <h3 class="pr-3">{{team[1].team_name}} ({{team[0]}})</h3>
+                            {% else %}
+                                <h4 class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</h4>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <!--
@@ -73,9 +89,6 @@
                     Highlight game
                     Waiver tracker
                 -->
-                <div class="">
-
-                </div>
             </div>
         </div>
     </body>

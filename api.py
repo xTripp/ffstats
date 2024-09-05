@@ -25,7 +25,7 @@ def get_league_name():
     return league.settings.name
 
 """
-Returns (list) all league seasons by year
+Returns (list[int]) all league seasons by year
 """
 def get_league_seasons():
     current_league = get_league()
@@ -53,4 +53,15 @@ def get_league_previous_winner():
     for team in last_league.teams:
         if team.final_standing == 1:
             return (team.team_name, (team.wins, team.ties, team.losses))
+
+"""
+Returns (list[tuple]) the power rankings for any week
+
+Parameters: 
+    week (int): selects the week of data to get. Defaults to current week if not provided
+"""
+def get_league_power_rankings(week=None):
+    if week == None:
+        week = league.current_week
+    return league.power_rankings(week)
         
