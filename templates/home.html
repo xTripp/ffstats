@@ -6,6 +6,15 @@
         <title>{{ name }} League Stats</title>
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home_content.css') }}">
+        <script>
+            function updateFormAction() {
+                var seasonSelect = document.getElementById('season');
+                var selectedYear = seasonSelect.value;
+                var form = document.getElementById('seasonForm');
+                form.action = '/season/' + selectedYear;
+                form.submit();
+            }
+        </script>
     </head>
     <body>
         <div class="content-container">
@@ -13,16 +22,16 @@
                 <div class="league-info">
                     <h1>League {{ name }}</h1>
                     <div class="league-subinfo">
-                        <form method="get" action="/season_select">
-                            <select id="season" name="season" onchange="this.form.submit()">
+                        <form id="seasonForm" method="get" onsubmit="updateFormAction(); return false;">
+                            <select id="season" name="season" onchange="updateFormAction()">
                                 {% for season in seasons %}
                                     {% set index = loop.index %}
-                                    <option value="{{ season }}" {% if season == season %}selected{% endif %}>
+                                    <option value="{{ season }}" {% if season == selected_season %}selected{% endif %}>
                                         Season {{ index }} ({{ season }})
                                     </option>
                                 {% endfor %}
                             </select>
-                        </form>
+                        </form>                        
                         <h2>{{ team_count }} teams</h2>
                         <h2>
                             Previous Champion: 

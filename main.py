@@ -1,23 +1,32 @@
 from flask import Flask, render_template
-from api import *
+import api
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
+    api.league = api.get_league()
     return render_template(
         'home.html',
-        name=get_league_name(),
-        seasons=get_league_seasons(),
-        team_count=get_league_num_teams(),
-        previous_winner=get_league_previous_winner()
+        name=api.get_league_name(),
+        selected_season=api.league.year,
+        seasons=api.get_league_seasons(),
+        team_count=api.get_league_num_teams(),
+        previous_winner=api.get_league_previous_winner()
     )
 
-# When a different season is selected this route is used to refresh the home page with the new season information
-# TODO fix this whole redirect mess, might be best to re-render home with the new values after resetting the league in api
-@app.route('/season_select')
-def season_select():
-    return home()
+# When a different season is selected this route is used to generate a new home page with the updated information
+@app.route('/season/<int:year>', methods=['GET'])
+def season_select(year):
+    api.league = api.get_league(year)
+    return render_template(
+        'home.html',
+        name=api.get_league_name(),
+        selected_season=year,
+        seasons=api.get_league_seasons(),
+        team_count=api.get_league_num_teams(),
+        previous_winner=api.get_league_previous_winner()
+    )
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

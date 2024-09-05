@@ -4,8 +4,8 @@ from datetime import datetime
 from espn_api.football import League
 
 load_dotenv()
+league = League
 
-# TODO get league is going to have to be rewritten to allow changing league year for re-rendering page
 """
 Returns a league instance for a specified year. If the year is not a year the league was active it will return None
 
@@ -18,8 +18,6 @@ def get_league(year=datetime.now().year):
     except:
         return None
 
-league = get_league()  # Create private leauge instance for use in other functions
-
 """
 Returns (str) name of league
 """
@@ -30,11 +28,13 @@ def get_league_name():
 Returns (list) all league seasons by year
 """
 def get_league_seasons():
-    year = datetime.now().year
+    current_league = get_league()
+
     # append the current year if not already in the list
-    if year not in league.previousSeasons:
-        league.previousSeasons.append(year)
-    return league.previousSeasons
+    if current_league.year not in current_league.previousSeasons:
+        current_league.previousSeasons.append(current_league.year)
+    
+    return current_league.previousSeasons
 
 """
 Returns (int) number of teams in league
@@ -47,7 +47,7 @@ Returns (tuple) the previous league winner's team info. If there is no previous 
 Ex. (Name, (Wins, Ties, Loses))
 """
 def get_league_previous_winner():
-    last_league = get_league(datetime.now().year - 1)
+    last_league = get_league(league.year - 1)
     if last_league == None:
         return None
     for team in last_league.teams:
