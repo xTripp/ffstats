@@ -1,8 +1,10 @@
 .league-info {
+    width: auto;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
     text-align: center;
-    font-size: 32px;
+    font-size: 2.2em;
 }
 
 .league-subinfo {
@@ -10,5 +12,34 @@
     flex-direction: row;
     justify-content: space-evenly;
     padding-top: 20px;
-    font-size: 20px;
+    font-size: 0.5em;
+}
+
+.power-rankings-container {
+    text-align: center;
+}
+
+.power-rankings-container h1 {
+    padding: 14px 0px 30px 0px;
+    font-size: 3em;
+}
+
+.pr-1 {
+    padding-bottom: 26px;
+    font-size: 2.8em;
+}
+
+.pr-2 {
+    padding-bottom: 22px;
+    font-size: 2.2em;
+}
+
+.pr-3 {
+    padding-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.pr-4 {
+    padding-bottom: 12px;
+    font-size: 1.4em;
 }

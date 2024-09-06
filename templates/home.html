@@ -42,22 +42,32 @@
                         </h2>
                     </div>
                 </div>
+                <hr>
                 <div class="power-rankings-container">
                     <h1>Power Rankings</h1>
                     <div class="power-rankings">
                         {% for team in power_rankings %}
                             {% set index = loop.index %}
                             {% if index == 1 %}
-                                <h1 class="pr-1">{{team[1].team_name}} ({{team[0]}})</h1>
+                                <h2 class="pr-1">{{team[1].team_name}} ({{team[0]}})</h1>
                             {% elif index == 2 %}
-                                <h2 class="pr-2">{{team[1].team_name}} ({{team[0]}})</h2>
+                                <h3 class="pr-2">{{team[1].team_name}} ({{team[0]}})</h2>
                             {% elif index == 3 %}
-                                <h3 class="pr-3">{{team[1].team_name}} ({{team[0]}})</h3>
+                                <h4 class="pr-3">{{team[1].team_name}} ({{team[0]}})</h3>
                             {% else %}
-                                <h4 class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</h4>
+                                <h5 class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</h4>
                             {% endif %}
                         {% endfor %}
                     </div>
+                </div>
+                <div class="stat-boxes-container">
+                    {% block content %}
+                        <div>
+                            {% with stat="Most points for", desc="Total points scored by active players in games", lb=stats[0] %}
+                                {% include "_stat_box.html" %}
+                            {% endwith %}
+                        </div>
+                    {% endblock %}
                 </div>
                 <!--
                     Mini leaderboards to include: (do by season and all time)

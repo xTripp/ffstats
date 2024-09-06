@@ -14,7 +14,7 @@ body {
 
 .content-container {
     position: relative;
-    width: 60%;
+    width: 50%;
     min-height: calc(100vh - 50px);
     height: auto;
     background: url(../images/paper.jpg) repeat-y center top;
@@ -27,4 +27,9 @@ body {
 
 .content {
     padding: 50px 20px;
+}
+
+hr {
+    width: 95%;
+    margin: 0 auto;
 }

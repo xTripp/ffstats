@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 from espn_api.football import League
+from leaderboardBuilder import LeaderboardBuilder
 
 load_dotenv()
 league = League
@@ -64,4 +65,7 @@ def get_league_power_rankings(week=None):
     if week == None:
         week = league.current_week
     return league.power_rankings(week)
+
+def get_league_stats():
+    return LeaderboardBuilder(league).stats
         
