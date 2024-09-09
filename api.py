@@ -51,6 +51,7 @@ def get_league_previous_winner():
     last_league = get_league(league.year - 1)
     if last_league == None:
         return None
+    
     for team in last_league.teams:
         if team.final_standing == 1:
             return (team.team_name, (team.wins, team.ties, team.losses))
@@ -64,8 +65,35 @@ Parameters:
 def get_league_power_rankings(week=None):
     if week == None:
         week = league.current_week
+
     return league.power_rankings(week)
 
+"""
+Returns (dict) of dicts where each is a leaderboard for a different stat. See leaderboardBuilder class for specific information on stat fields
+"""
 def get_league_stats():
     return LeaderboardBuilder(league).stats
-        
+
+"""
+Returns (dict) keyed by team name with a value of a formatted string of the team owners names
+"""
+def get_league_owners():
+    owners = {}
+    for team in league.teams:
+        owners[team.team_name] = _name_builder(team.owners)
+
+    return owners
+
+"""
+Returns (string) owners names for a team
+
+Parameters:
+    owners (array): owners of the team
+"""
+def _name_builder(owners):
+    if len(owners) == 1:
+        return owners[0]['firstName'] + " " + owners[0]['lastName']
+    elif len(owners) == 2:
+        return f"{owners[0]['firstName'] + " " + owners[0]['lastName']} and {owners[1]['firstName'] + " " + owners[1]['lastName']}"
+    else:
+        return f"{', '.join(owners[:-1]['firstName'] + " " + owners[:-1]['lastName'])}, and {owners[-1]['firstName'] + " " + owners[-1]['lastName']}"

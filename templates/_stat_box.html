@@ -1,13 +1,13 @@
-<fieldset>
-    <legend>{{ stat }}</legend>
-    <p>{{ desc }}</p>
+<fieldset class="leaderboard">
+    <legend class="leaderboard-label">{{ stat }}</legend>
+    <i><p class="leaderboard-desc">{{ desc }}</p></i>
     <dl>
         {% for team, value in lb.items() %}
             <dt>
-                <span class="stat_key">{{ team }}</span>
-                <span class="stat_value">{{ value }}</span>
+                <b><span class="stat-key">{{ team }}</span></b>
+                <span class="stat-val">{{ value }}</span>
             </dt>
-            <dd>owner</dd>
+            <dd>{{ owners[team] }}</dd>
         {% endfor %}
     </dl>
 </fieldset>

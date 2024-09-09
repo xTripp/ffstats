@@ -13,8 +13,10 @@ def home():
         seasons=api.get_league_seasons(),
         team_count=api.get_league_num_teams(),
         previous_winner=api.get_league_previous_winner(),
+        current_week=api.league.current_week,
         power_rankings=api.get_league_power_rankings(),
-        stats=api.get_league_stats()
+        stats=api.get_league_stats(),
+        owners=api.get_league_owners()
     )
 
 # When a different season is selected this route is used to generate a new home page with the updated information
@@ -28,8 +30,10 @@ def season_select(year):
         seasons=api.get_league_seasons(),
         team_count=api.get_league_num_teams(),
         previous_winner=api.get_league_previous_winner(),
+        current_week=api.league.current_week,
         power_rankings=api.get_league_power_rankings(),
-        stats=api.get_league_stats()
+        stats=api.get_league_stats(),
+        owners=api.get_league_owners()
     )
 
 if __name__ == "__main__":
