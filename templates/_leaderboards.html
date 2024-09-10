@@ -1,4 +1,5 @@
 <div class="stat-boxes-container">
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_leaderboards.css') }}">
     {% block wins %}
         <div class="stat-box">
             {% with stat="Most wins", desc="Total games won", lb=stats[0], owners=owners %}

@@ -14,18 +14,6 @@ def totalPoints(league):
         
     return stats
 
-def avgPoints(league):
-    stats = {}
-
-    for team in league.teams:
-        for game in team.games:
-            if game.home_team == team:
-                points += sum(player.points for player in game.home_lineup)
-            else:
-                points += sum(player.points for player in game.away_lineup)
-
-    return stats
-
 def winStreak():
     pass
 

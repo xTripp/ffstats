@@ -1,0 +1,40 @@
+.stat-boxes-container {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+.stat-box {
+    width: 45%;
+    padding: 15px 0px;
+}
+
+.leaderboard {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.leaderboard dt {
+    display: flex;
+}
+
+.leaderboard dd {
+    margin-left: 20px;
+}
+
+.leaderboard-label {
+    padding: 0px 10px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.leaderboard-desc {
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+.stat-val {
+    margin-left: auto;
+}

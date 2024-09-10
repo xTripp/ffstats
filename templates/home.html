@@ -6,6 +6,7 @@
         <title>{{ name }} League Stats</title>
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home_content.css') }}">
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_spinner.css') }}">
     </head>
     <body>
         <div class="content-container">
@@ -53,26 +54,21 @@
                     </div>
                 </div>
                 <hr>
-                <button id="load-leaderboards">Load Leaderboards</button>
-                <div id="leaderboards-container"></div>
+                <div class="load-leaderboards-container">
+                    <button id="load-leaderboards-button">Load Leaderboards</button>
+                    <div id="leaderboards-spinner" class="loading">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class="loading">Loading leaderboards... This may take a minute</p>
+                    <div id="leaderboards-container"></div>
+                </div>
             </div>
         </div>
-        <script>
-            function updateFormAction() {
-                var seasonSelect = document.getElementById('season');
-                var form = document.getElementById('seasonSelect');
-                form.action = '/season/' + seasonSelect.value;
-                form.submit();
-            }
-
-            document.getElementById("load-leaderboards").addEventListener("click", function() {
-                fetch("/load_leaderboards")
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById("leaderboards-container").innerHTML = data;
-                    })
-                    .catch(error => console.error('Error:', error));
-            });
-        </script>
+        <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
     </body>
 </html>

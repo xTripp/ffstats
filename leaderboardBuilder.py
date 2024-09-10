@@ -32,7 +32,7 @@ class LeaderboardBuilder:
         "pointsfor": lambda team: team.points_for,
         "pointsagainst": lambda team: team.points_against,
         "totalpoints": lambda league: totalPoints(league),
-        "avgpoints": lambda team: team.points_for / len([game for game in team.games if game is not None]),
+        "avgpoints": lambda team: team.points_for / (len([game for game in team.games if game is not None]) - 1),  # -1 to exclude current week
         "winstreak": lambda team: winStreak(team),
         "lossstreak": lambda team: lossStreak(team),
         "closestgames": lambda league: closestGames(league),
