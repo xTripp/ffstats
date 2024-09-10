@@ -1,0 +1,65 @@
+<div class="stat-boxes-container">
+    {% block wins %}
+        <div class="stat-box">
+            {% with stat="Most wins", desc="Total games won", lb=stats[0], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block losses %}
+        <div class="stat-box">
+            {% with stat="Most Losses", desc="Total games lost", lb=stats[1], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block pointsfor %}
+        <div class="stat-box">
+            {% with stat="Most points for", desc="Total points scored by active players in games", lb=stats[2], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block pointsagainst %}
+        <div class="stat-box">
+            {% with stat="Most points against", desc="Total points scored by opponent's active players in games", lb=stats[3], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block totalpoints %}
+        <div class="stat-box">
+            {% with stat="Most total points", desc="Total points scored by active and inactive players in games", lb=stats[4], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block avgpoints %}
+        <div class="stat-box">
+            {% with stat="Highest average points", desc="Average points scored by active players in games", lb=stats[5], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block trades %}
+        <div class="stat-box">
+            {% with stat="Most trades", desc="Total accepted trades", lb=stats[10], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block benchedpoints %}
+        <div class="stat-box">
+            {% with stat="Most benched points", desc="Most points scored by inactive players", lb=stats[11], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block pickups %}
+        <div class="stat-box">
+            {% with stat="Most waiver pickups", desc="Most players picked up off waivers", lb=stats[12], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+</div>

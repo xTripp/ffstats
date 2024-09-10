@@ -1,6 +1,6 @@
 from statUtils import all_box_scores, fetch_box_scores, totalPoints, winStreak, lossStreak, closestGames, blowoutGames, benchedPoints, pickupPoints, bestLineups, mostInjuries, underachievers, overachievers, highestWeek, lowestWeek, playoffWins, playoffPoints
 
-# Mini leaderboards to include: (do by season and all time)
+# Mini leaderboards to include: (separate by season, alltime, and playoffs)
 # Total wins
 # Total losses
 # Points for
