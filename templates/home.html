@@ -6,7 +6,9 @@
         <title>{{ name }} League Stats</title>
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home_content.css') }}">
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_season_select.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_spinner.css') }}">
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_leaderboards.css') }}">
     </head>
     <body>
         <div class="content-container">
@@ -14,16 +16,9 @@
                 <div class="league-info">
                     <h1>League {{ name }}</h1>
                     <div class="league-subinfo">
-                        <form id="seasonSelect" method="get" onsubmit="updateFormAction(); return false;">
-                            <select id="season" name="season" onchange="updateFormAction()">
-                                {% for season in seasons %}
-                                    {% set index = loop.index %}
-                                    <option value="{{ season }}" {% if season == selected_season %}selected{% endif %}>
-                                        Season {{ index }} ({{ season }})
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </form>                        
+                        {% with seasons=seasons, selected_season=selected_season %}
+                            {% include "_season_select.html" %}
+                        {% endwith %}                      
                         <h2>{{ team_count }} teams</h2>
                         <h2>
                             Previous Champion: 
@@ -56,6 +51,7 @@
                 <hr>
                 <div class="load-leaderboards-container">
                     <button id="load-leaderboards-button">Load Leaderboards</button>
+                    <p class="loading">Loading leaderboards... This may take a minute</p>
                     <div id="leaderboards-spinner" class="loading">
                         <div></div>
                         <div></div>
@@ -64,7 +60,6 @@
                         <div></div>
                         <div></div>
                     </div>
-                    <p class="loading">Loading leaderboards... This may take a minute</p>
                     <div id="leaderboards-container"></div>
                 </div>
             </div>

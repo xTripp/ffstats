@@ -18,7 +18,7 @@ body {
     min-height: calc(100vh - 50px);
     height: auto;
     background: url(../images/paper.jpg) repeat-y center top;
-    background-size: contain;
+    background-size: 100%;
     margin-top: 50px;
     --mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50%/20px 100%;
     -webkit-mask: var(--mask);

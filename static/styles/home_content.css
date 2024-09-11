@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    font-size: 2.2em;
+    font-size: 2em;
 }
 
 .league-subinfo {
@@ -46,10 +46,16 @@
 
 .load-leaderboards-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
     padding: 20px
 }
 
 .loading {
     display: none;
+}
+
+p.loading {
+    padding-bottom: 30px;
 }

@@ -1,7 +1,7 @@
 function updateFormAction() {
     var seasonSelect = document.getElementById('season');
     var form = document.getElementById('seasonSelect');
-    form.action = '/season/' + seasonSelect.value;
+    form.action = seasonSelect.value;
     form.submit();
 }
 
