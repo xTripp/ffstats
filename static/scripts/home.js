@@ -1,30 +1,58 @@
-function updateFormAction() {
-    var seasonSelect = document.getElementById('season');
-    var form = document.getElementById('seasonSelect');
-    form.action = seasonSelect.value;
-    form.submit();
-}
+// Handle the season select dropdown page reload
+document.addEventListener("change", function(event) {
+    if (event.target && event.target.id === 'season-select') {
+        // Disable the dropdown box while loading and remove old season data
+        document.getElementById("season-select").disabled = true;
+        document.getElementById("season-info").innerHTML = '';
 
-document.getElementById("load-leaderboards-button").addEventListener("click", function() {
-    // Hide the load leaderboards button
-    this.style.display = "none";
+        // Show all loading elements
+        document.getElementById("loading-season").textContent = `Loading ${event.target.value} Season... This may take a minute`;
+        document.getElementById("season-loading-container").style.display = "flex";
 
-    // Show all loading elements
-    [...document.getElementsByClassName("loading")].forEach(el => el.style.display = "block");
+        // Fetch data and populate the page, then hide loading elements
+        fetch(`/${event.target.value}`)
+            .then(response => response.text())
+            .then(data => {
+                // Re-enable season select dropdown
+                document.getElementById("season-select").disabled = false;
 
-    // Fetch data and populate the container, then hide loading elements
-    fetch("/load_leaderboards")
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("leaderboards-container").innerHTML = data;
+                // Reload page data
+                document.documentElement.innerHTML = data;
 
-            // Hide all loading elements after data is loaded
-            [...document.getElementsByClassName("loading")].forEach(el => el.style.display = "none");
-        })
-        .catch(error => {
-            document.getElementById("leaderboards-container").innerHTML = `
-                <p>Something went wrong. Try again later</p>
-                <p>Error: ${error}</p>
-            `;
-        });
+                // Hide all loading elements after data is loaded
+                document.getElementById("season-loading-container").style.display = "none";
+            })
+            .catch(error => {
+                document.documentElement.innerHTML = `
+                    <p>Something went wrong. Try again later</p>
+                    <p>Error: ${error}</p>
+                `;
+            });
+    }
+});
+
+// Handle the load leaderboards button's load sequence
+document.addEventListener("click", function(event) {
+    if (event.target && event.target.id === 'load-leaderboards-button') {
+        // Hide the load leaderboards button and show loading elements
+        event.target.style.display = "none";
+        document.getElementById("leaderboards-loading-container").style.display = "flex";
+
+        // Fetch data and populate the container, then hide loading elements
+        fetch("/load_leaderboards")
+            .then(response => response.text())
+            .then(data => {
+                // Load leaderboards data into page
+                document.getElementById("leaderboards-container").innerHTML = data;
+
+                // Hide loading elements after data is loaded
+                document.getElementById("leaderboards-loading-container").style.display = "none";
+            })
+            .catch(error => {
+                document.getElementById("leaderboards-container").innerHTML = `
+                    <p>Something went wrong. Try again later</p>
+                    <p>Error: ${error}</p>
+                `;
+            });
+    }
 });

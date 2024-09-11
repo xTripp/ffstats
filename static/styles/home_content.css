@@ -44,18 +44,15 @@
     font-size: 1.4em;
 }
 
-.load-leaderboards-container {
-    display: flex;
+#season-loading-container,
+#leaderboards-loading-container {
+    display: none;
     flex-direction: column;
     align-items: center;
     align-content: space-between;
-    padding: 20px
 }
 
-.loading {
-    display: none;
-}
-
-p.loading {
+#loading-season,
+.leaderboards-loading {
     padding-bottom: 30px;
 }

@@ -18,7 +18,7 @@ def home():
     )
 
 # When a different season is selected this route is used to generate a new home page with the updated information
-@app.route('/<int:year>', methods=['GET'])
+@app.route('/<int:year>')
 def season_select(year):
     api.league = api.get_league(year)
     return render_template(

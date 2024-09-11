@@ -6,20 +6,32 @@
         <title>{{ name }} League Stats</title>
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home_content.css') }}">
-        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_season_select.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_spinner.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_leaderboards.css') }}">
     </head>
     <body>
         <div class="content-container">
             <div class="content">
+
+                <!-- Header information -->
                 <div class="league-info">
                     <h1>League {{ name }}</h1>
                     <div class="league-subinfo">
-                        {% with seasons=seasons, selected_season=selected_season %}
-                            {% include "_season_select.html" %}
-                        {% endwith %}                      
+
+                        <!-- Season select dropdown -->
+                        <select id="season-select">
+                            {% for season in seasons %}
+                                {% set index = loop.index %}
+                                <option value="{{ season }}" {% if season == selected_season %}selected{% endif %}>
+                                    Season {{ index }} ({{ season }})
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                        <!-- Team count -->
                         <h2>{{ team_count }} teams</h2>
+
+                        <!-- Last season champion -->
                         <h2>
                             Previous Champion: 
                             {% if previous_winner %}
@@ -31,35 +43,58 @@
                     </div>
                 </div>
                 <hr>
-                <div class="power-rankings-container">
-                    <h1>Power Rankings (Week {{ current_week }})</h1>
-                    <div class="power-rankings">
-                        {% for team in power_rankings %}
-                            {% set index = loop.index %}
-                            {% if index == 1 %}
-                                <h2 class="pr-1">{{team[1].team_name}} ({{team[0]}})</h1>
-                            {% elif index == 2 %}
-                                <h3 class="pr-2">{{team[1].team_name}} ({{team[0]}})</h2>
-                            {% elif index == 3 %}
-                                <h4 class="pr-3">{{team[1].team_name}} ({{team[0]}})</h3>
-                            {% else %}
-                                <h5 class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</h4>
-                            {% endif %}
-                        {% endfor %}
+
+                <!-- Loading overlay for season select (Hidden) -->
+                <div id="season-loading-container">
+                    <p id="loading-season"></p>
+                    <div class="spinner">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
                     </div>
                 </div>
-                <hr>
-                <div class="load-leaderboards-container">
-                    <button id="load-leaderboards-button">Load Leaderboards</button>
-                    <p class="loading">Loading leaderboards... This may take a minute</p>
-                    <div id="leaderboards-spinner" class="loading">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+
+                <!-- Season information and widgets -->
+                <div id="season-info">
+
+                    <!-- Power rankings -->
+                    <div class="power-rankings-container">
+                        <h1>Power Rankings (Week {{ current_week }})</h1>
+                        <div class="power-rankings">
+                            {% for team in power_rankings %}
+                                {% set index = loop.index %}
+                                {% if index == 1 %}
+                                    <h2 class="pr-1">{{team[1].team_name}} ({{team[0]}})</h1>
+                                {% elif index == 2 %}
+                                    <h3 class="pr-2">{{team[1].team_name}} ({{team[0]}})</h2>
+                                {% elif index == 3 %}
+                                    <h4 class="pr-3">{{team[1].team_name}} ({{team[0]}})</h3>
+                                {% else %}
+                                    <h5 class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</h4>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
+                    <hr>
+
+                    <!-- Loading overlay for stat leaderboards (Hidden) -->
+                    <button id="load-leaderboards-button">Load Leaderboards</button>
+                    <div id="leaderboards-loading-container">
+                        <p class="leaderboards-loading">Loading leaderboards... This may take a minute</p>
+                        <div class="spinner">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+
+                    <!-- All stat leaderboards -->
                     <div id="leaderboards-container"></div>
                 </div>
             </div>
