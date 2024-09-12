@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+import os
 import api
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -41,4 +42,4 @@ def load_leaderboard():
     return render_template('_leaderboards.html', stats=stats, owners=owners)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
