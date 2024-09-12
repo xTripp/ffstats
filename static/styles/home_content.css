@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'Topic';
+    src: url('../fonts/Topic.ttf');
+}
+
+@font-face {
+    font-family: 'Topic-Bold';
+    src: url('../fonts/Topic-Bold.ttf');
+}
+
 /* Header styling */
 .league-info {
     width: auto;
@@ -41,36 +51,34 @@ select:focus {
 .power-rankings-container {
     padding: 20px;
     text-align: center;
+    font-family: 'Topic-Bold', Arial, sans-serif;
+    letter-spacing: 1px;
 }
 
 .power-rankings-title {
     padding-bottom: 40px;
-    font-size: 3rem;
-    font-weight: bold;
-    text-decoration: underline;
+    font-size: 4rem;
 }
 
 .pr-1 {
     padding-bottom: 30px;
-    font-size: 2.5rem;
-    font-weight: bold;
+    font-size: 3.5rem;
 }
 
 .pr-2 {
     padding-bottom: 26px;
-    font-size: 2.25rem;
-    font-weight: bold;
+    font-size: 3.25rem;
 }
 
 .pr-3 {
     padding-bottom: 22px;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 3rem;
 }
 
 .pr-4 {
     padding-bottom: 18px;
-    font-size: 1.5rem;
+    font-family: 'Topic', Arial, sans-serif;
+    font-size: 2rem;
 }
 
 /* Leaderboards section styling */
@@ -92,6 +100,8 @@ select:focus {
 
 #season-loading-container,
 #leaderboards-loading-container {
+    padding: 30px;
+    padding-bottom: 60px;
     display: none;
     flex-direction: column;
     align-items: center;
@@ -105,6 +115,14 @@ select:focus {
 
 }
 
+/* Under construction area */
+.under-construction {
+    padding: 30px;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
 /* Optimize page for smaller viewports */
 @media (max-width: 768px) {
     .league-title {
@@ -116,28 +134,28 @@ select:focus {
     }
 
     .power-rankings-title {
-        font-size: 2.4rem;
-        padding-bottom: 24px;
+        font-size: 5rem;
+        padding-bottom: 16px;
     }
 
     .pr-1 {
-        font-size: 2.3rem;
-        padding-bottom: 22px;
+        font-size: 3.5rem;
+        padding-bottom: 12px;
     }
     
     .pr-2 {
-        font-size: 2.1rem;
-        padding-bottom: 18px;
+        font-size: 3.25rem;
+        padding-bottom: 12px;
     }
     
     .pr-3 {
-        font-size: 1.9rem;
-        padding-bottom: 14px;
+        font-size: 3rem;
+        padding-bottom: 12px;
     }
     
     .pr-4 {
-        font-size: 1.5rem;
-        padding-bottom: 10px;
+        font-size: 2.5rem;
+        padding-bottom: 6px;
     }
 }
 
@@ -151,22 +169,27 @@ select:focus {
     }
 
     .power-rankings-title {
-        font-size: 2rem;
+        font-size: 3.5rem;
+        padding-bottom: 16px;
     }
 
     .pr-1 {
-        font-size: 1.8rem;
+        font-size: 3rem;
+        padding-bottom: 12px;
     }
     
     .pr-2 {
-        font-size: 1.6rem;
+        font-size: 2.75rem;
+        padding-bottom: 12px;
     }
     
     .pr-3 {
-        font-size: 1.4rem;
+        font-size: 2.5rem;
+        padding-bottom: 12px;
     }
     
     .pr-4 {
-        font-size: 1.1rem;
+        font-size: 2rem;
+        padding-bottom: 6px;
     }
 }
