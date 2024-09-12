@@ -35,7 +35,7 @@ document.addEventListener("change", function(event) {
 document.addEventListener("click", function(event) {
     if (event.target && event.target.id === 'load-leaderboards-button') {
         // Hide the load leaderboards button and show loading elements
-        event.target.style.display = "none";
+        event.target.parentNode.style.display = "none";
         document.getElementById("leaderboards-loading-container").style.display = "flex";
 
         // Fetch data and populate the container, then hide loading elements

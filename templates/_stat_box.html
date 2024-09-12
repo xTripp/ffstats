@@ -4,7 +4,7 @@
     <dl>
         {% for team, value in lb.items() %}
             <dt>
-                <b><span class="stat-key">{{ team }}</span></b>
+                <span class="stat-key">{{ team }}</span>
                 <span class="stat-val">{{ value }}</span>
             </dt>
             <dd>{{ owners[team] }}</dd>

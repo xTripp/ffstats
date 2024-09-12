@@ -4,19 +4,25 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 16px;
+}
+
 body {
     min-height: 100vh;
     background-color: #1A237E;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
 }
 
 .content-container {
     position: relative;
-    width: 50%;
+    width: 80%;
+    max-width: 1000px;
     min-height: calc(100vh - 50px);
-    height: auto;
     background: url(../images/paper.jpg) repeat-y center top;
     background-size: 100%;
     margin-top: 50px;
@@ -32,4 +38,35 @@ body {
 hr {
     width: 95%;
     margin: 0 auto;
+}
+
+/* Optimize page for smaller viewports */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .content-container {
+        width: 90%;
+    }
+
+    .content {
+        padding: 30px 15px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 12px;
+    }
+
+    .content-container {
+        width: 95%;
+    }
+
+    .content {
+        padding: 20px 10px;
+        font-size: 0.9rem;
+    }
 }

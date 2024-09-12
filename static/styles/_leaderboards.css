@@ -13,7 +13,7 @@
 
 .leaderboard {
     padding: 10px;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .leaderboard dt {
@@ -26,15 +26,30 @@
 
 .leaderboard-label {
     padding: 0px 10px;
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .leaderboard-desc {
-    font-size: 18px;
     padding-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.stat-key {
+    font-weight: bold;
 }
 
 .stat-val {
     margin-left: auto;
+}
+
+/* Optimize page for smaller viewports */
+@media (max-width: 768px) {
+    .stat-box {
+        width: 90%;
+    }
+
+    .leaderboard-desc {
+        font-size: 1.4rem;
+    }
 }

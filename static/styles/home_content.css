@@ -1,10 +1,15 @@
+/* Header styling */
 .league-info {
     width: auto;
     padding-bottom: 20px;
     display: flex;
     flex-direction: column;
     text-align: center;
-    font-size: 2em;
+}
+
+.league-title {
+    font-size: 3.5rem;
+    font-weight: bolder;
 }
 
 .league-subinfo {
@@ -12,36 +17,77 @@
     flex-direction: row;
     justify-content: space-evenly;
     padding-top: 20px;
-    font-size: 0.5em;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
+select {
+    padding: 3px;
+    background: transparent;
+    border: 3px double #a5a5a5;
+    border-radius: 4px;
+    appearance: none;
+    -webkit-appearance: auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+}
+
+/* Power rankings styling */
 .power-rankings-container {
+    padding: 20px;
     text-align: center;
 }
 
-.power-rankings-container h1 {
-    padding: 14px 0px 30px 0px;
-    font-size: 3em;
+.power-rankings-title {
+    padding-bottom: 40px;
+    font-size: 3rem;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .pr-1 {
-    padding-bottom: 26px;
-    font-size: 2.8em;
+    padding-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: bold;
 }
 
 .pr-2 {
-    padding-bottom: 22px;
-    font-size: 2.2em;
+    padding-bottom: 26px;
+    font-size: 2.25rem;
+    font-weight: bold;
 }
 
 .pr-3 {
-    padding-bottom: 20px;
-    font-size: 1.8em;
+    padding-bottom: 22px;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .pr-4 {
-    padding-bottom: 12px;
-    font-size: 1.4em;
+    padding-bottom: 18px;
+    font-size: 1.5rem;
+}
+
+/* Leaderboards section styling */
+.load-leaderboards-button-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 50px;
+}
+
+#load-leaderboards-button {
+    width: fit-content;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 #season-loading-container,
@@ -53,6 +99,74 @@
 }
 
 #loading-season,
-.leaderboards-loading {
-    padding-bottom: 30px;
+.loading-leaderboards {
+    padding: 30px 0px;
+    font-size: 2rem;
+
+}
+
+/* Optimize page for smaller viewports */
+@media (max-width: 768px) {
+    .league-title {
+        font-size: 2.8rem;
+    }
+
+    .league-subinfo {
+        font-size: 1.5rem;
+    }
+
+    .power-rankings-title {
+        font-size: 2.4rem;
+        padding-bottom: 24px;
+    }
+
+    .pr-1 {
+        font-size: 2.3rem;
+        padding-bottom: 22px;
+    }
+    
+    .pr-2 {
+        font-size: 2.1rem;
+        padding-bottom: 18px;
+    }
+    
+    .pr-3 {
+        font-size: 1.9rem;
+        padding-bottom: 14px;
+    }
+    
+    .pr-4 {
+        font-size: 1.5rem;
+        padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .league-title {
+        font-size: 2.5rem;
+    }
+
+    .league-subinfo {
+        font-size: 1.3rem;
+    }
+
+    .power-rankings-title {
+        font-size: 2rem;
+    }
+
+    .pr-1 {
+        font-size: 1.8rem;
+    }
+    
+    .pr-2 {
+        font-size: 1.6rem;
+    }
+    
+    .pr-3 {
+        font-size: 1.4rem;
+    }
+    
+    .pr-4 {
+        font-size: 1.1rem;
+    }
 }

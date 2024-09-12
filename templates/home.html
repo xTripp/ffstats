@@ -15,7 +15,7 @@
 
                 <!-- Header information -->
                 <div class="league-info">
-                    <h1>League {{ name }}</h1>
+                    <div class="league-title">League {{ name }}</div>
                     <div class="league-subinfo">
 
                         <!-- Season select dropdown -->
@@ -28,18 +28,15 @@
                             {% endfor %}
                         </select>
 
-                        <!-- Team count -->
-                        <h2>{{ team_count }} teams</h2>
-
                         <!-- Last season champion -->
-                        <h2>
+                        <div>
                             Previous Champion: 
                             {% if previous_winner %}
                                 {{ previous_winner[0] }} ({{ previous_winner[1][0] }}-{{ previous_winner[1][2] }}-{{ previous_winner[1][1] }})
                             {% else %}
                                 N/A
                             {% endif %}
-                        </h2>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -62,18 +59,18 @@
 
                     <!-- Power rankings -->
                     <div class="power-rankings-container">
-                        <h1>Power Rankings (Week {{ current_week }})</h1>
+                        <div class="power-rankings-title">Power Rankings (Week {{ current_week }})</div>
                         <div class="power-rankings">
                             {% for team in power_rankings %}
                                 {% set index = loop.index %}
                                 {% if index == 1 %}
-                                    <h2 class="pr-1">{{team[1].team_name}} ({{team[0]}})</h1>
+                                    <div class="pr-1">{{team[1].team_name}} ({{team[0]}})</div>
                                 {% elif index == 2 %}
-                                    <h3 class="pr-2">{{team[1].team_name}} ({{team[0]}})</h2>
+                                    <div class="pr-2">{{team[1].team_name}} ({{team[0]}})</div>
                                 {% elif index == 3 %}
-                                    <h4 class="pr-3">{{team[1].team_name}} ({{team[0]}})</h3>
+                                    <div class="pr-3">{{team[1].team_name}} ({{team[0]}})</div>
                                 {% else %}
-                                    <h5 class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</h4>
+                                    <div class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</div>
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -81,9 +78,11 @@
                     <hr>
 
                     <!-- Loading overlay for stat leaderboards (Hidden) -->
-                    <button id="load-leaderboards-button">Load Leaderboards</button>
+                    <div class="load-leaderboards-button-container">
+                        <button id="load-leaderboards-button">Load Leaderboards</button>
+                    </div>
                     <div id="leaderboards-loading-container">
-                        <p class="leaderboards-loading">Loading leaderboards... This may take a minute</p>
+                        <p class="loading-leaderboards">Loading leaderboards... This may take a minute</p>
                         <div class="spinner">
                             <div></div>
                             <div></div>

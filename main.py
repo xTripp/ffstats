@@ -3,6 +3,7 @@ import api
 
 app = Flask(__name__)
 
+# root route
 @app.route('/')
 def home():
     api.league = api.get_league()
@@ -32,6 +33,7 @@ def season_select(year):
         power_rankings=api.get_league_power_rankings()
     )
 
+# This route is used when the user clicks the load leaderboards button to fetch the league stats
 @app.route('/load_leaderboards')
 def load_leaderboard():
     stats=api.get_league_stats()
