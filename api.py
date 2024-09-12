@@ -94,6 +94,6 @@ def _name_builder(owners):
     if len(owners) == 1:
         return owners[0]['firstName'] + " " + owners[0]['lastName']
     elif len(owners) == 2:
-        return f"{owners[0]['firstName'] + " " + owners[0]['lastName']} and {owners[1]['firstName'] + " " + owners[1]['lastName']}"
+        return f"{owners[0]['firstName']} {owners[0]['lastName']} and {owners[1]['firstName']} {owners[1]['lastName']}"
     else:
-        return f"{', '.join(owners[:-1]['firstName'] + " " + owners[:-1]['lastName'])}, and {owners[-1]['firstName'] + " " + owners[-1]['lastName']}"
+        return f"{', '.join(owner['firstName'] + ' ' + owner['lastName'] for owner in owners[:-1])}, and {owners[-1]['firstName']} {owners[-1]['lastName']}"
