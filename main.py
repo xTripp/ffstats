@@ -46,4 +46,4 @@ def load_leaderboard():
 # Health check route
 @app.route('/health')
 def health_check():
-    return Response("OK", staus=200)
+    return "OK"
