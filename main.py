@@ -1,4 +1,3 @@
-import os
 import api
 from flask import Flask, render_template, request
 
@@ -43,3 +42,8 @@ def load_leaderboard():
         stats=api.get_league_stats(),
         owners=api.get_league_owners()
     )
+
+# Health check route
+@app.route('/health')
+def health_check():
+    return "OK"
