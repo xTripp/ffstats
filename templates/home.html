@@ -10,79 +10,41 @@
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_leaderboards.css') }}">
     </head>
     <body>
-        <div class="content-container">
-            <div class="content">
+        <div class="background-layer">
+            <div class="content-container">
+                <div class="content">
 
-                <!-- Header information -->
-                <div class="league-info">
-                    <div class="league-title">League {{ name }}</div>
-                    <div class="league-subinfo">
+                    <!-- Header information -->
+                    <div class="league-info">
+                        <div class="league-title">League {{ name }}</div>
+                        <div class="league-subinfo">
 
-                        <!-- Season select dropdown -->
-                        <select id="season-select">
-                            {% for season in seasons %}
-                                {% set index = loop.index %}
-                                <option value="{{ season }}" {% if season == selected_season %}selected{% endif %}>
-                                    Season {{ index }} ({{ season }})
-                                </option>
-                            {% endfor %}
-                        </select>
+                            <!-- Season select dropdown -->
+                            <select id="season-select">
+                                {% for season in seasons %}
+                                    {% set index = loop.index %}
+                                    <option value="{{ season }}" {% if season == selected_season %}selected{% endif %}>
+                                        Season {{ index }} ({{ season }})
+                                    </option>
+                                {% endfor %}
+                            </select>
 
-                        <!-- Last season champion -->
-                        <div>
-                            Previous Champion: 
-                            {% if previous_winner %}
-                                {{ previous_winner[0] }} ({{ previous_winner[1][0] }}-{{ previous_winner[1][2] }}-{{ previous_winner[1][1] }})
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <hr>
-
-                <!-- Loading overlay for season select (Hidden) -->
-                <div id="season-loading-container">
-                    <p id="loading-season"></p>
-                    <div class="spinner">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-
-                <!-- Season information and widgets -->
-                <div id="season-info">
-
-                    <!-- Power rankings -->
-                    <div class="power-rankings-container">
-                        <div class="power-rankings-title">Power Rankings (Week {{ current_week }})</div>
-                        <div class="power-rankings">
-                            {% for team in power_rankings %}
-                                {% set index = loop.index %}
-                                {% if index == 1 %}
-                                    <div class="pr-1">{{team[1].team_name}} ({{team[0]}})</div>
-                                {% elif index == 2 %}
-                                    <div class="pr-2">{{team[1].team_name}} ({{team[0]}})</div>
-                                {% elif index == 3 %}
-                                    <div class="pr-3">{{team[1].team_name}} ({{team[0]}})</div>
+                            <!-- Last season champion -->
+                            <div>
+                                Previous Champion: 
+                                {% if previous_winner %}
+                                    {{ previous_winner[0] }} ({{ previous_winner[1][0] }}-{{ previous_winner[1][2] }}-{{ previous_winner[1][1] }})
                                 {% else %}
-                                    <div class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</div>
+                                    N/A
                                 {% endif %}
-                            {% endfor %}
+                            </div>
                         </div>
                     </div>
                     <hr>
 
-                    <!-- Loading overlay for stat leaderboards (Hidden) -->
-                    <div class="load-leaderboards-button-container">
-                        <button id="load-leaderboards-button">Load Leaderboards</button>
-                    </div>
-                    <div id="leaderboards-loading-container">
-                        <p class="loading-leaderboards">Loading leaderboards... This may take a minute</p>
+                    <!-- Loading overlay for season select (Hidden) -->
+                    <div id="season-loading-container">
+                        <p id="loading-season"></p>
                         <div class="spinner">
                             <div></div>
                             <div></div>
@@ -93,13 +55,57 @@
                         </div>
                     </div>
 
-                    <!-- All stat leaderboards -->
-                    <div id="leaderboards-container"></div>
-                    <hr>
+                    <!-- Season information and widgets -->
+                    <div id="season-info">
 
-                    <!-- Under contruction area -->
-                    <div class="under-construction">
-                        More is coming... check for updates in the next few days
+                        <!-- Power rankings -->
+                        <div class="power-rankings-container">
+                            <div class="power-rankings-title">Power Rankings (Week {{ current_week }})</div>
+                            <div class="power-rankings">
+                                {% for team in power_rankings %}
+                                    {% set index = loop.index %}
+                                    {% if index == 1 %}
+                                        <div class="pr-1">{{team[1].team_name}} ({{team[0]}})</div>
+                                    {% elif index == 2 %}
+                                        <div class="pr-2">{{team[1].team_name}} ({{team[0]}})</div>
+                                    {% elif index == 3 %}
+                                        <div class="pr-3">{{team[1].team_name}} ({{team[0]}})</div>
+                                    {% else %}
+                                        <div class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="power-rankings-tip">
+                                Power rankings are calculated using two step dominance. Individual power scores are the result of the overall outcome of your games, your opponent, and your opponent's games.<br><br>
+                                For example, if Team A beat Team B and Team B beat Team C, it can suggest Team A is stronger than Team C, even if they haven't played each other.
+                            </div>
+                        </div>
+                        <hr>
+
+                        <!-- Loading overlay for stat leaderboards (Hidden) -->
+                        <div class="load-leaderboards-button-container">
+                            <button id="load-leaderboards-button">Load Leaderboards</button>
+                        </div>
+                        <div id="leaderboards-loading-container">
+                            <p class="loading-leaderboards">Loading leaderboards... This may take a minute</p>
+                            <div class="spinner">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+
+                        <!-- All stat leaderboards -->
+                        <div id="leaderboards-container"></div>
+                        <hr>
+
+                        <!-- Under contruction area -->
+                        <div class="under-construction">
+                            More is coming... check for updates in the next few days
+                        </div>
                     </div>
                 </div>
             </div>

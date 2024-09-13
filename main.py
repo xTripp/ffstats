@@ -1,6 +1,6 @@
 import os
 import api
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -37,9 +37,12 @@ def season_select(year):
 # This route is used when the user clicks the load leaderboards button to fetch the league stats
 @app.route('/load_leaderboards')
 def load_leaderboard():
-    stats=api.get_league_stats()
-    owners=api.get_league_owners()
-    return render_template('_leaderboards.html', stats=stats, owners=owners)
+    api.league = api.get_league(request.args.get('year', type=int))
+    return render_template(
+        '_leaderboards.html',
+        stats=api.get_league_stats(),
+        owners=api.get_league_owners()
+    )
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+    app.run(host="0.0.0.0", port=5000, debug=True)
