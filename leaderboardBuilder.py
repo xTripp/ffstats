@@ -24,8 +24,11 @@ from statUtils import all_box_scores, fetch_box_scores, totalPoints, winStreak, 
 # Playoff wins
 # Playoff points
 
+"""
+LeaderboardBuilder is a class responsible for generating all stat leaderboards.
+"""
 class LeaderboardBuilder:
-    stats = {}
+    leaderboards = {}
     _stat_keys = {
         "wins": lambda team: team.wins,
         "losses": lambda team: team.losses,
@@ -56,24 +59,24 @@ class LeaderboardBuilder:
         for team in league.teams:
             team.games = self._get_team_games(team)
 
-        self.stats[0] = self._generate_leaderboard(self._get_league_stats("wins", league))
-        self.stats[1] = self._generate_leaderboard(self._get_league_stats("losses", league))
-        self.stats[2] = self._generate_leaderboard(self._get_league_stats("pointsfor", league))
-        self.stats[3] = self._generate_leaderboard(self._get_league_stats("pointsagainst", league))
-        self.stats[4] = self._generate_leaderboard(self._stat_keys["totalpoints"](league))
-        self.stats[5] = self._generate_leaderboard(self._get_league_stats("avgpoints", league))
-        self.stats[10] = self._generate_leaderboard(self._get_league_stats("trades", league))
-        self.stats[11] = self._generate_leaderboard(self._stat_keys["benchedpoints"](league))
-        self.stats[12] = self._generate_leaderboard(self._get_league_stats("pickups", league))
+        self.leaderboards[0] = self._generate_leaderboard(self._get_league_stats("wins", league))
+        self.leaderboards[1] = self._generate_leaderboard(self._get_league_stats("losses", league))
+        self.leaderboards[2] = self._generate_leaderboard(self._get_league_stats("pointsfor", league))
+        self.leaderboards[3] = self._generate_leaderboard(self._get_league_stats("pointsagainst", league))
+        self.leaderboards[4] = self._generate_leaderboard(self._stat_keys["totalpoints"](league))
+        self.leaderboards[5] = self._generate_leaderboard(self._get_league_stats("avgpoints", league))
+        self.leaderboards[10] = self._generate_leaderboard(self._get_league_stats("trades", league))
+        self.leaderboards[11] = self._generate_leaderboard(self._stat_keys["benchedpoints"](league))
+        self.leaderboards[12] = self._generate_leaderboard(self._get_league_stats("pickups", league))
 
-    def _generate_leaderboard(self, league_stats, reverse=True):
-        return dict(sorted(league_stats.items(), key=lambda item: item[1], reverse=reverse))
+    def _generate_leaderboard(self, league_leaderboards, reverse=True):
+        return dict(sorted(league_leaderboards.items(), key=lambda item: item[1], reverse=reverse))
     
     def _get_league_stats(self, stat, league):
-        stats = {}
+        leaderboards = {}
         for team in league.teams:
-            stats[team.team_name] = round(self._stat_keys[stat](team), 2)
-        return stats
+            leaderboards[team.team_name] = round(self._stat_keys[stat](team), 2)
+        return leaderboards
     
     def _get_team_games(self, team):
         games = []
