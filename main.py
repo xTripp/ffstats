@@ -43,6 +43,3 @@ def load_leaderboard():
         stats=api.get_league_stats(),
         owners=api.get_league_owners()
     )
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
