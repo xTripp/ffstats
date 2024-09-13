@@ -1,5 +1,5 @@
 import api
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 
 app = Flask(__name__)
 
@@ -46,4 +46,4 @@ def load_leaderboard():
 # Health check route
 @app.route('/health')
 def health_check():
-    return "OK"
+    return Response("OK", staus=200)
