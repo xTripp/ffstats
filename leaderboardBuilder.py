@@ -25,7 +25,7 @@ from statUtils import all_box_scores, fetch_box_scores, totalPoints, winStreak, 
 # Playoff points
 
 """
-LeaderboardBuilder is a class responsible for generating all stat leaderboards.
+LeaderboardBuilder is a class responsible for generating all stat leaderboards. When initialized it generates all leaderboards for the current league object stored in api.py.
 """
 class LeaderboardBuilder:
     leaderboards = {}
