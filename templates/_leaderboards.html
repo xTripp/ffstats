@@ -15,49 +15,49 @@
     {% endblock %}
     {% block pointsfor %}
         <div class="stat-box">
-            {% with stat="High Rollers", desc="Total points scored by active players in games", lb=stats[2], owners=owners %}
+            {% with stat="High Rollers", desc="(Points for) Total points scored by active players in games", lb=stats[2], owners=owners %}
                 {% include "_stat_box.html" %}
             {% endwith %}
         </div>
     {% endblock %}
     {% block pointsagainst %}
         <div class="stat-box">
-            {% with stat="League Punching Bag", desc="Total points scored by opponent's active players in games", lb=stats[3], owners=owners %}
+            {% with stat="Punching Bag", desc="(Points against) Total points scored by opponent's active players in games", lb=stats[3], owners=owners %}
                 {% include "_stat_box.html" %}
             {% endwith %}
         </div>
     {% endblock %}
     {% block benchedpoints %}
         <div class="stat-box">
-            {% with stat="Benchwarmers", desc="Total points scored by inactive players", lb=stats[11], owners=owners %}
+            {% with stat="Benchwarmers", desc="(Bench points) Total points scored by inactive players in games", lb=stats[11], owners=owners %}
                 {% include "_stat_box.html" %}
             {% endwith %}
         </div>
     {% endblock %}
     {% block totalpoints %}
         <div class="stat-box">
-            {% with stat="King of the Hill", desc="Total points scored by active and inactive players in games", lb=stats[4], owners=owners %}
+            {% with stat="King of the Hill", desc="(Total points) Total points scored by active and inactive players in games", lb=stats[4], owners=owners %}
                 {% include "_stat_box.html" %}
             {% endwith %}
         </div>
     {% endblock %}
     {% block avgpoints %}
         <div class="stat-box">
-            {% with stat="Average points", desc="Average points scored per game", lb=stats[5], owners=owners %}
+            {% with stat="Average points", desc="(Average points) Average points scored per game", lb=stats[5], owners=owners %}
                 {% include "_stat_box.html" %}
             {% endwith %}
         </div>
     {% endblock %}
     {% block trades %}
         <div class="stat-box">
-            {% with stat="Sonny Weaver Jr.", desc="Total accepted trades", lb=stats[10], owners=owners %}
+            {% with stat="Sonny Weaver Jr.", desc="(Trades) Total accepted trades", lb=stats[10], owners=owners %}
                 {% include "_stat_box.html" %}
             {% endwith %}
         </div>
     {% endblock %}
     {% block pickups %}
         <div class="stat-box">
-            {% with stat="Waiver Vulture", desc="Total players picked up off waivers", lb=stats[12], owners=owners %}
+            {% with stat="Waiver Vulture", desc="(Waiver Pickups) Total players picked up off waivers", lb=stats[12], owners=owners %}
                 {% include "_stat_box.html" %}
             {% endwith %}
         </div>

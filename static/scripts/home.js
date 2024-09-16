@@ -38,8 +38,11 @@ document.addEventListener("click", function(event) {
         event.target.parentNode.style.display = "none";
         document.getElementById("leaderboards-loading-container").style.display = "flex";
 
+        // Get current selected season for leaderboards
+        const season = document.getElementById("season-select").value
+
         // Fetch data and populate the container, then hide loading elements
-        fetch("/load_leaderboards")
+        fetch(`/load_leaderboards?year=${season}`)
             .then(response => response.text())
             .then(data => {
                 // Load leaderboards data into page

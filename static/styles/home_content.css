@@ -81,6 +81,13 @@ select:focus {
     font-size: 2rem;
 }
 
+.power-rankings-tip {
+    padding-top: 10px;
+    text-align: left;
+    font-family: 'Gotham', Arial, sans-serif;
+    font-size: 0.8rem;
+}
+
 /* Leaderboards section styling */
 .load-leaderboards-button-container {
     display: flex;
@@ -127,6 +134,7 @@ select:focus {
 @media (max-width: 768px) {
     .league-title {
         font-size: 2.8rem;
+        padding-top: 20px;
     }
 
     .league-subinfo {
@@ -157,11 +165,16 @@ select:focus {
         font-size: 2.5rem;
         padding-bottom: 6px;
     }
+
+    .power-rankings-tip {
+        font-size: 0.7rem;
+    }
 }
 
 @media (max-width: 480px) {
     .league-title {
         font-size: 2.5rem;
+        padding-top: 20px;
     }
 
     .league-subinfo {
@@ -191,5 +204,9 @@ select:focus {
     .pr-4 {
         font-size: 2rem;
         padding-bottom: 6px;
+    }
+
+    .power-rankings-tip {
+        font-size: 0.6rem;
     }
 }
