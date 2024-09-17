@@ -1,7 +1,4 @@
 import os
-import psutil
-import time
-import threading
 from dotenv import load_dotenv
 from datetime import datetime
 from espn_api.football import League
@@ -9,16 +6,6 @@ from leaderboardBuilder import LeaderboardBuilder
 
 load_dotenv()
 league = League
-
-def print_mem_usage():
-    while True:
-        process = psutil.Process()
-        memory_info = process.memory_info()
-        print(f"Memory usage: {memory_info.rss / (1024 * 1024):.2f} MB")
-        time.sleep(1)
-memory_thread = threading.Thread(target=print_mem_usage)
-memory_thread.daemon = True
-memory_thread.start()
 
 """
 Returns a league instance for a specified year. If the year is not a year the league was active it will return None
