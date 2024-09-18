@@ -14,8 +14,23 @@ def totalPoints(league):
         
     return stats
 
-def winStreak():
-    pass
+def winStreak(league):
+    stats = {}
+
+    for team in league.teams:
+        longest = 0
+        streak = 0
+        head = 0
+
+        for i, outcome in enumerate(team.outcomes):
+            if outcome == "W":
+                streak += 1
+            else:
+                if streak >= longest:
+                    longest = streak
+                    head = (i - streak) + 1
+
+        stats[team.team_name] = (streak, "Week %i-Week %i".format(head, head + longest))
 
 def lossStreak():
     pass
@@ -59,12 +74,6 @@ def highestWeek():
     pass
 
 def lowestWeek():
-    pass
-
-def playoffWins():
-    pass
-
-def playoffPoints():
     pass
 
 def fetch_box_scores(league):

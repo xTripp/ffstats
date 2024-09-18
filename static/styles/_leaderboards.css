@@ -20,10 +20,6 @@
     display: flex;
 }
 
-.leaderboard dd {
-    margin-left: 20px;
-}
-
 .leaderboard-label {
     padding: 0px 10px;
     font-size: 2rem;
@@ -41,6 +37,14 @@
 
 .stat-val {
     margin-left: auto;
+}
+
+.info-key {
+    margin-left: 20px;
+}
+
+.info-val {
+    margin-left: 100%;
 }
 
 /* Optimize page for smaller viewports */

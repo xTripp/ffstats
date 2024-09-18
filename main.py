@@ -1,6 +1,15 @@
-import os
 import api
 from flask import Flask, render_template, request
+
+# Ideas:
+# Power rankings graph to display week by week
+# Link team names to a team page with specific team stats
+# Compare 2 teams stats
+# Mini leaderboards by season, all-time, and playoffs
+# Trade tracker
+# Luck index
+
+# When i finished i was working on the stat box to handle a tuple being passed after that the winstreak box should work but need to test and optimize
 
 app = Flask(__name__)
 

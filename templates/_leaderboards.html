@@ -48,6 +48,13 @@
             {% endwith %}
         </div>
     {% endblock %}
+    {% block winstreak %}
+        <div class="stat-box">
+            {% with stat="Unstoppable", desc="(Win streak) Longest win streak in a single season", lb=stats[6], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
     {% block trades %}
         <div class="stat-box">
             {% with stat="Sonny Weaver Jr.", desc="(Trades) Total accepted trades", lb=stats[10], owners=owners %}

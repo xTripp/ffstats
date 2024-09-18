@@ -1,6 +1,4 @@
-from statUtils import all_box_scores, fetch_box_scores, totalPoints, winStreak, lossStreak, closestGames, blowoutGames, benchedPoints, pickupPoints, bestLineups, mostInjuries, underachievers, overachievers, highestWeek, lowestWeek, playoffWins, playoffPoints
-
-# Mini leaderboards to include: (separate by season, alltime, and playoffs)
+from statUtils import all_box_scores, fetch_box_scores, totalPoints, winStreak, lossStreak, closestGames, blowoutGames, benchedPoints, pickupPoints, bestLineups, mostInjuries, underachievers, overachievers, highestWeek, lowestWeek
 
 """
 LeaderboardBuilder is a class responsible for generating all stat leaderboards. When initialized it generates all leaderboards for the current league object stored in api.py.
@@ -18,7 +16,7 @@ class LeaderboardBuilder:
         "pointsagainst": lambda team: team.points_against,
         "totalpoints": lambda league: totalPoints(league),
         "avgpoints": lambda team: team.points_for / (len([game for game in team.games if game is not None]) - 1),  # -1 to exclude current week
-        "winstreak": lambda team: winStreak(team),
+        "winstreak": lambda league: winStreak(league),
         "lossstreak": lambda team: lossStreak(team),
         "closestgames": lambda league: closestGames(league),
         "blowoutgames": lambda league: blowoutGames(league),
@@ -32,8 +30,6 @@ class LeaderboardBuilder:
         "overachievers": lambda team: overachievers(team),
         "highestWeek": lambda league: highestWeek(league),
         "lowestWeek": lambda league: lowestWeek(league),
-        "playoffWins": lambda team: playoffWins(team),
-        "playoffPoints": lambda team: playoffPoints(team)
     }
 
     """
@@ -53,6 +49,7 @@ class LeaderboardBuilder:
         self.leaderboards[3] = self._generate_leaderboard(self._get_league_stats("pointsagainst", league))
         self.leaderboards[4] = self._generate_leaderboard(self._stat_keys["totalpoints"](league))
         self.leaderboards[5] = self._generate_leaderboard(self._get_league_stats("avgpoints", league))
+        self.leaderboards[6] = self._generate_leaderboard(self._stat_keys["winstreak"](league))
         self.leaderboards[10] = self._generate_leaderboard(self._get_league_stats("trades", league))
         self.leaderboards[11] = self._generate_leaderboard(self._stat_keys["benchedpoints"](league))
         self.leaderboards[12] = self._generate_leaderboard(self._get_league_stats("pickups", league))

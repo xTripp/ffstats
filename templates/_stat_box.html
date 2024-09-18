@@ -7,7 +7,10 @@
                 <span class="stat-key">{{ team }}</span>
                 <span class="stat-val">{{ value }}</span>
             </dt>
-            <dd>{{ owners[team] }}</dd>
+            <dd>
+                <span class="info-key">{{ owners[team] }}</span>
+                <span class="info-val">{{ value }}</span>
+            </dd>
         {% endfor %}
     </dl>
 </fieldset>
