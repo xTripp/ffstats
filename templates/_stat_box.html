@@ -5,11 +5,23 @@
         {% for team, value in lb.items() %}
             <dt>
                 <span class="stat-key">{{ team }}</span>
-                <span class="stat-val">{{ value }}</span>
+                <span class="stat-val">
+                    {% if value is iterable and value is not string %}
+                        {{ value[0] }}
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                </span>
             </dt>
             <dd>
-                <span class="info-key">{{ owners[team] }}</span>
-                <span class="info-val">{{ value }}</span>
+                {% for owner_key, owner_val in owners.items() %}
+                    {% if team.startswith(owner_key) %}
+                        <span class="info-key">{{ owner_val }}</span>
+                    {% endif %}
+                {% endfor %}
+                {% if value is iterable and value is not string %}
+                    <i><span class="info-val">{{ value[1] }}</span></i>
+                {% endif %}
             </dd>
         {% endfor %}
     </dl>

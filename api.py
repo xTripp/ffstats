@@ -72,7 +72,7 @@ def get_league_power_rankings(week=None):
 Returns (dict) of dicts where each is a leaderboard for a different stat. See leaderboardBuilder class for specific information on stat fields
 """
 def get_league_stats():
-    return LeaderboardBuilder(league).stats
+    return LeaderboardBuilder(league).leaderboards
 
 """
 Returns (dict) keyed by team name with a value of a formatted string of the team owners names

@@ -20,6 +20,12 @@
     display: flex;
 }
 
+.leaderboard dd {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
 .leaderboard-label {
     padding: 0px 10px;
     font-size: 2rem;
@@ -44,7 +50,9 @@
 }
 
 .info-val {
-    margin-left: 100%;
+    margin-top: auto;
+    margin-left: auto;
+    font-size: 0.8rem;
 }
 
 /* Optimize page for smaller viewports */

@@ -55,6 +55,27 @@
             {% endwith %}
         </div>
     {% endblock %}
+    {% block lossstreak %}
+        <div class="stat-box">
+            {% with stat="Stoppable", desc="(Loss streak) Longest losing streak in a single season", lb=stats[7], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block closestgames %}
+        <div class="stat-box">
+            {% with stat="Nail Biters", desc="(Closest Games) Games with the closest score margin", lb=stats[8], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
+    {% block blowoutgames %}
+        <div class="stat-box">
+            {% with stat="Blowouts", desc="(Blowout Games) Games with the farthest apart score margin", lb=stats[9], owners=owners %}
+                {% include "_stat_box.html" %}
+            {% endwith %}
+        </div>
+    {% endblock %}
     {% block trades %}
         <div class="stat-box">
             {% with stat="Sonny Weaver Jr.", desc="(Trades) Total accepted trades", lb=stats[10], owners=owners %}

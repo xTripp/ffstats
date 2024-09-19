@@ -9,6 +9,7 @@ Variables:
 """
 class LeaderboardBuilder:
     leaderboards = {}
+    # add most touchdowns
     _stat_keys = {
         "wins": lambda team: team.wins,
         "losses": lambda team: team.losses,
@@ -38,7 +39,7 @@ class LeaderboardBuilder:
     Parameters:
         league (League): The current league object to pull stats from
     """
-    def __init__(self, league) -> None:
+    def __init__(self, league):
         fetch_box_scores(league)
         for team in league.teams:
             team.games = self._get_team_games(team)
@@ -50,6 +51,9 @@ class LeaderboardBuilder:
         self.leaderboards[4] = self._generate_leaderboard(self._stat_keys["totalpoints"](league))
         self.leaderboards[5] = self._generate_leaderboard(self._get_league_stats("avgpoints", league))
         self.leaderboards[6] = self._generate_leaderboard(self._stat_keys["winstreak"](league))
+        self.leaderboards[7] = self._generate_leaderboard(self._stat_keys["lossstreak"](league))
+        self.leaderboards[8] = self._generate_leaderboard(self._stat_keys["closestgames"](league), False)
+        self.leaderboards[9] = self._generate_leaderboard(self._stat_keys["blowoutgames"](league))
         self.leaderboards[10] = self._generate_leaderboard(self._get_league_stats("trades", league))
         self.leaderboards[11] = self._generate_leaderboard(self._stat_keys["benchedpoints"](league))
         self.leaderboards[12] = self._generate_leaderboard(self._get_league_stats("pickups", league))
