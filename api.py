@@ -97,3 +97,10 @@ def _name_builder(owners):
         return f"{owners[0]['firstName']} {owners[0]['lastName']} and {owners[1]['firstName']} {owners[1]['lastName']}"
     else:
         return f"{', '.join(owner['firstName'] + ' ' + owner['lastName'] for owner in owners[:-1])}, and {owners[-1]['firstName']} {owners[-1]['lastName']}"
+    
+def get_trades():
+    trades = []
+    for event in league.recent_activity(size=1000, msg_type="TRADED"):
+        print(event)
+
+    return trades

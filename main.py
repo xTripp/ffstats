@@ -9,8 +9,6 @@ from flask import Flask, render_template, request
 # Trade tracker
 # Luck index
 
-# When i finished i was working on the stat box to handle a tuple being passed after that the winstreak box should work but need to test and optimize
-
 app = Flask(__name__)
 
 # root route
@@ -25,7 +23,8 @@ def home():
         team_count=api.get_league_num_teams(),
         previous_winner=api.get_league_previous_winner(),
         current_week=api.league.current_week,
-        power_rankings=api.get_league_power_rankings()
+        power_rankings=api.get_league_power_rankings(),
+        trades=api.get_trades()
     )
 
 # When a different season is selected this route is used to generate a new home page with the updated information
@@ -40,7 +39,8 @@ def season_select(year):
         team_count=api.get_league_num_teams(),
         previous_winner=api.get_league_previous_winner(),
         current_week=api.league.current_week,
-        power_rankings=api.get_league_power_rankings()
+        power_rankings=api.get_league_power_rankings(),
+        trades=api.get_trades()
     )
 
 # This route is used when the user clicks the load leaderboards button to fetch the league stats

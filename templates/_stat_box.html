@@ -3,8 +3,10 @@
     <i><p class="leaderboard-desc">{{ desc }}</p></i>
     <dl>
         {% for team, value in lb.items() %}
+            <!-- Top row for each leaderboard entry -->
             <dt>
                 <span class="stat-key">{{ team }}</span>
+                <!-- Handle if data is just a value or unpack if it is a tuple -->
                 <span class="stat-val">
                     {% if value is iterable and value is not string %}
                         {{ value[0] }}
@@ -13,12 +15,15 @@
                     {% endif %}
                 </span>
             </dt>
+
+            <!-- Bottom row for each leaderboard entry -->
             <dd>
                 {% for owner_key, owner_val in owners.items() %}
                     {% if team.startswith(owner_key) %}
                         <span class="info-key">{{ owner_val }}</span>
                     {% endif %}
                 {% endfor %}
+                <!-- This will only display if the stat has secondary information (tuple data) -->
                 {% if value is iterable and value is not string %}
                     <i><span class="info-val">{{ value[1] }}</span></i>
                 {% endif %}
