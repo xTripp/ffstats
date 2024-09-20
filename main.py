@@ -3,11 +3,16 @@ from flask import Flask, render_template, request
 
 # Ideas:
 # Power rankings graph to display week by week
+# Power rankings podium graphics
 # Link team names to a team page with specific team stats
 # Compare 2 teams stats
 # Mini leaderboards by season, all-time, and playoffs
 # Trade tracker
 # Luck index
+# Live stat command center for live data
+
+# I ended off getting points for both teams post trade and adding it to the trade dictionary
+# need to do the get week function and fix _trade_box.html with the new data
 
 app = Flask(__name__)
 

@@ -105,6 +105,9 @@
                         <!-- Trade Tracker-->
                         <div class="trade-tracker">
                             {% for trade in trades %}
+                                {% with trade=trade %}
+                                    {% include "_trade_box.html" %}
+                                {% endwith %}
                             {% endfor %}
                         </div>
 

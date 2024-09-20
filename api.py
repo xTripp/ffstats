@@ -99,8 +99,18 @@ def _name_builder(owners):
         return f"{', '.join(owner['firstName'] + ' ' + owner['lastName'] for owner in owners[:-1])}, and {owners[-1]['firstName']} {owners[-1]['lastName']}"
     
 def get_trades():
-    trades = []
-    for event in league.recent_activity(size=1000, msg_type="TRADED"):
-        print(event)
+    trades = {}
+    for trade in league.recent_activity(size=1000, msg_type="TRADED"):
+        team1_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[0].team_name]
+        team2_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[-1].team_name]
+        trades[trade.date] = {
+            'week': _get_week(trade.date),
+            'team1_assets': team1_assets,
+            'team2_assets': team2_assets,
+            'actions': trade.actions
+        }
 
     return trades
+
+def _get_week(time):
+    return 0
