@@ -1,47 +1,32 @@
 <div class="trade-container">
-    {% for time, details in trade.items() %}
-        {% set team1 = details[0].team.team_name %}
-        {% set team1_assets = [] %}
-        {% set team2 = details[-1].team.team_name %}
-        {% set team2_assets = [] %}
-        {% for asset in details %}
-            {% if asset[0].team_name == team1 %}
-                {% team1_assets.append(asset) %}
-            {% else %}
-                {% team2_assets.append(asset) %}
-            {% endif %}
-        {% endfor %}
+    {% set team1 = trade_data["actions"][0][0] %}
+    {% set team2 = trade_data["actions"][-1][0] %}
 
-        <div class="trade-header">{{ time }}</div>
-        <div class="trade-teams">
-            <div class="trade-team">
-                <img class="trade-team-logo" src="{{ details[0].team.logo_url }}"/>
-                {{ team1 }}
-            </div>
-            <div class="trade-team">
-                <img class="trade-team-logo" src="{{ details[-1].team.logo_url }}"/>
-                {{ team2 }}
-            </div>
+    <div class="trade-header">{{ trade_date }} (Week {{trade_data["week"]}})</div>
+    <div class="trade-content">
+        <div class="trade-team">
+            <img class="trade-team-logo" src="{{ team1.logo_url }}"/>
+            {{ team1.team_name }}
         </div>
-        <div class="trade-score-meter"></div>
         <div class="trade-details">
-            <div class="trade-team-assets">
-                {% for asset in details %}
-                    {% if asset[0].team_name == team1 %}
-                        <p>{{ asset.position }} {{ asset.name }} {{ asset.proTeam }}</p><br>
-                    {% endif %}
+            <div class="trade-team1-assets">
+                {% for asset in trade_data["team1_assets"] %}
+                    <p>{{ asset.position }} {{ asset.name }} ({{ asset.proTeam }})</p><br>
                 {% endfor %}
             </div>
             <div class="trade-scores">
-                
+                {{ trade_data["team1_points"] }} - {{ trade_data["team2_points"] }}
             </div>
-            <div class="trade-team-assets">
-                {% for asset in details %}
-                    {% if asset[0].team_name == team2 %}
-                        <p>{{ asset.position }} {{ asset.name }} {{ asset.proTeam }}</p><br>
-                    {% endif %}
+            <div class="trade-team2-assets">
+                {% for asset in trade_data["team2_assets"] %}
+                    <p>{{ asset.position }} {{ asset.name }} ({{ asset.proTeam }})</p><br>
                 {% endfor %}
             </div>
         </div>
-    {% endfor %}
+        <div class="trade-team">
+            <img class="trade-team-logo" src="{{ team2.logo_url }}"/>
+            {{ team2.team_name }}
+        </div>
+    </div>
+    <div class="trade-score-meter"></div>
 </div>

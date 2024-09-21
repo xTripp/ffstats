@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 from datetime import datetime
 from espn_api.football import League
@@ -6,6 +7,8 @@ from leaderboardBuilder import LeaderboardBuilder
 
 load_dotenv()
 league = League
+with open('nfl_start_dates.json', 'r') as file:
+    nfl_start_dates = json.load(file)
 
 """
 Returns a league instance for a specified year. If the year is not a year the league was active it will return None
@@ -101,16 +104,33 @@ def _name_builder(owners):
 def get_trades():
     trades = {}
     for trade in league.recent_activity(size=1000, msg_type="TRADED"):
-        team1_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[0].team_name]
-        team2_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[-1].team_name]
-        trades[trade.date] = {
+        team1_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[0][0].team_name]
+        team1_asset_stats = [player.stats for player in team1_assets]
+        team1_points_since_trade = sum(week.points for week in team1_asset_stats[_get_week(trade.date):])
+        team2_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[-1][0].team_name]
+        team2_asset_stats = [player.stats for player in team2_assets]
+        team2_points_since_trade = sum(week.points for week in team2_asset_stats[_get_week(trade.date):])
+        trades[datetime.fromtimestamp(trade.date / 1000).strftime("%B %d, %Y %I:%M %p")] = {
             'week': _get_week(trade.date),
             'team1_assets': team1_assets,
             'team2_assets': team2_assets,
+            'team1_points': team1_points_since_trade,
+            'team2_points': team2_points_since_trade,
             'actions': trade.actions
         }
 
     return trades
 
 def _get_week(time):
-    return 0
+    season_start_in_seconds = nfl_start_dates[str(league.year)] / 1000
+    trade_time_in_seconds = time / 1000
+
+    season_start = datetime.fromtimestamp(season_start_in_seconds)
+    trade_time = datetime.fromtimestamp(trade_time_in_seconds)
+
+    if trade_time < season_start:
+        return 0
+
+    delta = trade_time - season_start
+
+    return (delta.days // 7) + 1

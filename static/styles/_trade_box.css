@@ -1,0 +1,75 @@
+.trade-container {
+    width: calc(100% - 50px);
+    margin: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+
+.trade-header {
+    font-size: 1rem;
+    margin: -18px 0 0 -18px;
+}
+
+.trade-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    padding-top: 20px;
+}
+
+.trade-team {
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.trade-team-logo {
+    width: 150px;
+    height: auto;
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 50%;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.trade-details {
+    width: 60%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trade-team1-assets {
+    margin-left: -35px;
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+.trade-team2-assets {
+    margin-right: -35px;
+    font-size: 1.5rem;
+    text-align: right;
+}
+
+.trade-scores {
+    font-size: 2rem;
+}
+
+.trade-score-meter {
+    width: auto;
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 20px;
+    background-color: black;
+}
