@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 from datetime import datetime
 from espn_api.football import League
@@ -6,6 +7,8 @@ from leaderboardBuilder import LeaderboardBuilder
 
 load_dotenv()
 league = League
+with open('nfl_start_dates.json', 'r') as file:
+    nfl_start_dates = json.load(file)
 
 """
 Returns a league instance for a specified year. If the year is not a year the league was active it will return None
@@ -72,7 +75,7 @@ def get_league_power_rankings(week=None):
 Returns (dict) of dicts where each is a leaderboard for a different stat. See leaderboardBuilder class for specific information on stat fields
 """
 def get_league_stats():
-    return LeaderboardBuilder(league).stats
+    return LeaderboardBuilder(league).leaderboards
 
 """
 Returns (dict) keyed by team name with a value of a formatted string of the team owners names
@@ -97,3 +100,60 @@ def _name_builder(owners):
         return f"{owners[0]['firstName']} {owners[0]['lastName']} and {owners[1]['firstName']} {owners[1]['lastName']}"
     else:
         return f"{', '.join(owner['firstName'] + ' ' + owner['lastName'] for owner in owners[:-1])}, and {owners[-1]['firstName']} {owners[-1]['lastName']}"
+    
+def get_trades():
+    trades = {}
+    
+    for trade in league.recent_activity(size=1000, msg_type="TRADED"):
+        trade_week = _get_week(trade.date)
+
+        team1 = trade.actions[0][0]
+        team2 = trade.actions[-1][0]
+        
+        # Get assets for both teams based on trade actions
+        team_assets = {
+            'team1_assets': [asset[2] for asset in trade.actions if asset[0].team_name == team1.team_name],
+            'team2_assets': [asset[2] for asset in trade.actions if asset[0].team_name == team2.team_name]
+        }
+
+        # Calculate total points for each player from the trade week onwards
+        asset_points = {
+            'team1_assets': {
+                asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week)
+                for asset in team_assets['team1_assets']
+            },
+            'team2_assets': {
+                asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week)
+                for asset in team_assets['team2_assets']
+            }
+        }
+
+        # Format the trade date as a human-readable string
+        trade_date = datetime.fromtimestamp(trade.date / 1000).strftime("%B %d, %Y %I:%M %p")
+        
+        # Add the trade details to the dictionary
+        # Trades are backwards to place the received assets on the correct side
+        trades[trade_date] = {
+            'week': trade_week,
+            'team1_assets': team_assets['team2_assets'],
+            'team2_assets': team_assets['team1_assets'],
+            'team1_points': asset_points['team2_assets'],
+            'team2_points': asset_points['team1_assets'],
+            'actions': trade.actions
+        }
+
+    return trades
+
+def _get_week(time):
+    season_start_in_seconds = nfl_start_dates[str(league.year)] / 1000
+    trade_time_in_seconds = time / 1000
+
+    season_start = datetime.fromtimestamp(season_start_in_seconds)
+    trade_time = datetime.fromtimestamp(trade_time_in_seconds)
+
+    if trade_time < season_start:
+        return 0
+
+    delta = trade_time - season_start
+
+    return (delta.days // 7) + 1

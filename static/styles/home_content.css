@@ -89,6 +89,14 @@ select:focus {
 }
 
 /* Leaderboards section styling */
+.leaderboards-header {
+    padding-top: 20px;
+    font-family: 'Topic-Bold', Arial, sans-serif;
+    text-align: center;
+    font-size: 4rem;
+    letter-spacing: 1px;
+}
+
 .load-leaderboards-button-container {
     display: flex;
     justify-content: center;
@@ -120,6 +128,22 @@ select:focus {
     padding: 30px 0px;
     font-size: 2rem;
 
+}
+
+/** Trade tracker */
+.trade-tracker-header {
+    padding-top: 20px;
+    font-family: 'Topic-Bold', Arial, sans-serif;
+    text-align: center;
+    font-size: 4rem;
+    letter-spacing: 1px;
+}
+
+.trade-tracker-unavailable,
+.trades-none {
+    padding-top: 20px;
+    text-align: center;
+    font-size: 1.6rem;
 }
 
 /* Under construction area */

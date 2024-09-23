@@ -21,7 +21,9 @@
 }
 
 .leaderboard dd {
-    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
 
 .leaderboard-label {
@@ -41,6 +43,16 @@
 
 .stat-val {
     margin-left: auto;
+}
+
+.info-key {
+    margin-left: 20px;
+}
+
+.info-val {
+    margin-top: auto;
+    margin-left: auto;
+    font-size: 0.8rem;
 }
 
 /* Optimize page for smaller viewports */

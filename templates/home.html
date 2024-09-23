@@ -8,6 +8,7 @@
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home_content.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_spinner.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_leaderboards.css') }}">
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_trade_box.css') }}">
     </head>
     <body>
         <div class="background-layer">
@@ -83,6 +84,7 @@
                         <hr>
 
                         <!-- Loading overlay for stat leaderboards (Hidden) -->
+                        <p class="leaderboards-header">Leaderboards</p>
                         <div class="load-leaderboards-button-container">
                             <button id="load-leaderboards-button">Load Leaderboards</button>
                         </div>
@@ -100,6 +102,23 @@
 
                         <!-- All stat leaderboards -->
                         <div id="leaderboards-container"></div>
+                        <hr>
+
+                        <!-- Trade Tracker-->
+                        <p class="trade-tracker-header">Trade Tracker</p>
+                        {% if selected_season == current_year %}
+                            <div>
+                                {% for trade_date, trade_data in trades.items() %}
+                                    {% with trade_date=trade_date, trade_data=trade_data %}
+                                        {% include "_trade_box.html" %}
+                                    {% endwith %}
+                                {% endfor %}
+                            </div>
+                        {% elif trades| len == 0 %}
+                            <p class="trades-none">No trades yet.</p>
+                        {% else %}
+                            <p class="trade-tracker-unavailable">Trade tracker unavailable for previous seasons.</p>
+                        {% endif %}
                         <hr>
 
                         <!-- Under contruction area -->
