@@ -51,25 +51,42 @@
 }
 
 .trade-team1-assets {
-    margin-left: -35px;
-    font-size: 1.5rem;
+    margin-left: -30px;
+    font-size: 1.3rem;
     text-align: left;
 }
 
 .trade-team2-assets {
-    margin-right: -35px;
-    font-size: 1.5rem;
+    margin-right: -30px;
+    font-size: 1.3rem;
     text-align: right;
 }
 
 .trade-scores {
-    font-size: 2rem;
+    font-size: 2.3rem;
 }
 
 .trade-score-meter {
-    width: auto;
-    height: 40px;
+    display: flex;
+    height: 50px;
     margin-top: 20px;
-    border-radius: 20px;
+    border: 2px solid black;
+    border-radius: 25px;
     background-color: black;
+    overflow: hidden;
+}
+
+.asset-score {
+    min-width: fit-content;
+    height: auto;
+    display: flex;
+    padding: 5px;
+    border-right: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.asset-score:last-child {
+    border-right: none;
 }

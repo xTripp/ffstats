@@ -103,19 +103,42 @@ def _name_builder(owners):
     
 def get_trades():
     trades = {}
+    
     for trade in league.recent_activity(size=1000, msg_type="TRADED"):
-        team1_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[0][0].team_name]
-        team1_asset_stats = [player.stats for player in team1_assets]
-        team1_points_since_trade = sum(week.points for week in team1_asset_stats[_get_week(trade.date):])
-        team2_assets = [asset[2] for asset in trade.actions if asset[0].team_name == trade.actions[-1][0].team_name]
-        team2_asset_stats = [player.stats for player in team2_assets]
-        team2_points_since_trade = sum(week.points for week in team2_asset_stats[_get_week(trade.date):])
-        trades[datetime.fromtimestamp(trade.date / 1000).strftime("%B %d, %Y %I:%M %p")] = {
-            'week': _get_week(trade.date),
-            'team1_assets': team1_assets,
-            'team2_assets': team2_assets,
-            'team1_points': team1_points_since_trade,
-            'team2_points': team2_points_since_trade,
+        trade_week = _get_week(trade.date)
+
+        team1 = trade.actions[0][0]
+        team2 = trade.actions[-1][0]
+        
+        # Get assets for both teams based on trade actions
+        team_assets = {
+            'team1_assets': [asset[2] for asset in trade.actions if asset[0].team_name == team1.team_name],
+            'team2_assets': [asset[2] for asset in trade.actions if asset[0].team_name == team2.team_name]
+        }
+
+        # Calculate total points for each player from the trade week onwards
+        asset_points = {
+            'team1_assets': {
+                asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week)
+                for asset in team_assets['team1_assets']
+            },
+            'team2_assets': {
+                asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week)
+                for asset in team_assets['team2_assets']
+            }
+        }
+
+        # Format the trade date as a human-readable string
+        trade_date = datetime.fromtimestamp(trade.date / 1000).strftime("%B %d, %Y %I:%M %p")
+        
+        # Add the trade details to the dictionary
+        # Trades are backwards to place the received assets on the correct side
+        trades[trade_date] = {
+            'week': trade_week,
+            'team1_assets': team_assets['team2_assets'],
+            'team2_assets': team_assets['team1_assets'],
+            'team1_points': asset_points['team2_assets'],
+            'team2_points': asset_points['team1_assets'],
             'actions': trade.actions
         }
 

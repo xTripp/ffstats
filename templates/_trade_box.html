@@ -1,6 +1,11 @@
 <div class="trade-container">
     {% set team1 = trade_data["actions"][0][0] %}
     {% set team2 = trade_data["actions"][-1][0] %}
+    {% set team1_colors = ['#f32323', '#f77878', '#f43b3b', '#f43b3b'] %}
+    {% set team2_colors = ['#058ed9', '#acdaf4', '#1e9bdd', '#036ca5'] %}
+    {% set team1_total_points = (trade_data["team1_points"].values() | map('float') | sum)%}
+    {% set team2_total_points = (trade_data["team2_points"].values() | map('float') | sum)%}
+    {% set total_points = team1_total_points + team2_total_points | round(2) %}
 
     <div class="trade-header">{{ trade_date }} (Week {{trade_data["week"]}})</div>
     <div class="trade-content">
@@ -10,15 +15,17 @@
         </div>
         <div class="trade-details">
             <div class="trade-team1-assets">
+                <b>Receives:</b><br><br>
                 {% for asset in trade_data["team1_assets"] %}
                     <p>{{ asset.position }} {{ asset.name }} ({{ asset.proTeam }})</p><br>
                 {% endfor %}
             </div>
-            <div class="trade-scores">
-                {{ trade_data["team1_points"] }} - {{ trade_data["team2_points"] }}
+            <div class="trade-scores">                
+                {{ team1_total_points | round(2) }} - {{ team2_total_points | round(2) }}
             </div>
             <div class="trade-team2-assets">
-                {% for asset in trade_data["team2_assets"] %}
+                <b>Receives:</b><br><br>
+                {% for asset in trade_data["team1_assets"] %}
                     <p>{{ asset.position }} {{ asset.name }} ({{ asset.proTeam }})</p><br>
                 {% endfor %}
             </div>
@@ -28,5 +35,34 @@
             {{ team2.team_name }}
         </div>
     </div>
-    <div class="trade-score-meter"></div>
+    <div class="trade-score-meter">
+        {% set total_points = team1_total_points + team2_total_points %}
+        {% set total_assets = trade_data["team1_assets"] | length + trade_data["team2_assets"] | length %}
+        
+        <!-- Team 1 Assets -->
+        {% for asset in trade_data["team1_assets"] %}
+            {% set index = loop.index0 %}
+            {% set points = trade_data["team1_points"][asset] %}
+            {% if total_points > 0 %}
+                {% set asset_percentage = (points / total_points) * 100 %}
+            {% else %}
+                {% set asset_percentage = 100 / total_assets %}
+            {% endif %}
+            {% set background_color = team1_colors[index % team1_colors | length] %}
+            <div class="asset-score" style="width: {{ asset_percentage }}%; background-color: {{ background_color }};">{{ asset.name }}<br>{{ points }} points</div>
+        {% endfor %}
+    
+        <!-- Team 2 Assets -->
+        {% for asset in trade_data["team2_assets"] %}
+            {% set index = loop.index0 + trade_data["team1_assets"] | length %}
+            {% set points = trade_data["team2_points"][asset] %}
+            {% if total_points > 0 %}
+                {% set asset_percentage = (points / total_points) * 100 %}
+            {% else %}
+                {% set asset_percentage = 100 / total_assets %}
+            {% endif %}
+            {% set background_color = team2_colors[index % team2_colors | length] %}
+            <div class="asset-score" style="width: {{ asset_percentage }}%; background-color: {{ background_color }};">{{ asset.name }}<br>{{ points }} points</div>
+        {% endfor %}
+    </div>     
 </div>
