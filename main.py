@@ -7,9 +7,9 @@ from flask import Flask, render_template, request
 # Link team names to a team page with specific team stats
 # Compare 2 teams stats
 # Mini leaderboards by season, all-time, and playoffs
-# Trade tracker
 # Luck index
 # Live stat command center for live data
+# Support tracking other leagues
 
 app = Flask(__name__)
 
