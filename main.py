@@ -1,3 +1,4 @@
+import os
 import api
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
@@ -66,4 +67,5 @@ def health_check():
     return "OK"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    port = int(os.getenv('PORT', 8000))
+    app.run(host='0.0.0.0', port=port)
