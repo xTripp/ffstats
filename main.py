@@ -1,6 +1,4 @@
-import os
 import api
-from dotenv import load_dotenv
 from flask import Flask, render_template, request
 
 # Ideas:
@@ -14,7 +12,6 @@ from flask import Flask, render_template, request
 # Support tracking other leagues
 
 app = Flask(__name__)
-load_dotenv()
 
 # root route
 @app.route('/')
@@ -64,7 +61,7 @@ def load_leaderboard():
 # Health check route
 @app.route('/health')
 def health_check():
-    return "OK"
+    return "OK", 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
