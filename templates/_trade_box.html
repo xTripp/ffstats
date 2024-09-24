@@ -20,7 +20,8 @@
                     <p>{{ asset.position }} {{ asset.name }} ({{ asset.proTeam }})</p><br>
                 {% endfor %}
             </div>
-            <div class="trade-scores">                
+            <div class="trade-scores">
+                <span class="trade-scores-desc">Points since trade</span><br>
                 {{ team1_total_points | round(2) }} - {{ team2_total_points | round(2) }}
             </div>
             <div class="trade-team2-assets">
