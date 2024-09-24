@@ -64,6 +64,11 @@
 
 .trade-scores {
     font-size: 2.3rem;
+    text-align: center;
+}
+
+.trade-scores-desc {
+    font-size: 1.4rem;
 }
 
 .trade-score-meter {
