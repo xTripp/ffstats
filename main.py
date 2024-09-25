@@ -3,7 +3,6 @@ import api
 from flask import Flask, render_template, request
 from datetime import datetime
 
-# Set up logging
 logging.basicConfig(level=logging.DEBUG)
 
 # Ideas:
@@ -17,8 +16,6 @@ logging.basicConfig(level=logging.DEBUG)
 # Support tracking other leagues
 
 app = Flask(__name__)
-
-# Log that the app has started
 logging.debug("Flask app initialized and starting")
 
 # root route
@@ -31,7 +28,6 @@ def home():
     current_year = api.league.year
     logging.debug(f"Current year: {current_year}")
     
-    # Log before rendering the template
     logging.debug("Rendering home.html template")
     
     return render_template(
@@ -58,7 +54,6 @@ def season_select(year):
     logging.debug("Fetching league data for selected year")
     api.league = api.get_league(year)
     
-    # Log before rendering the template
     logging.debug(f"Rendering home.html for year: {year}")
     
     return render_template(
@@ -84,7 +79,6 @@ def load_leaderboard():
     
     api.league = api.get_league(selected_year)
     
-    # Log before rendering the leaderboard
     logging.debug("Rendering _leaderboards.html template")
     
     return render_template(
@@ -93,6 +87,10 @@ def load_leaderboard():
         owners=api.get_league_owners()
     )
 
+# This route is used for render's health checks to prevent it from DOS attacking my site
+@app.route('/health')
+def health_check():
+    return {'status': 'ok'}
+
 if __name__ == "__main__":
-    logging.debug("Running app with debug=True")
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
