@@ -115,7 +115,7 @@
                                     {% endwith %}
                                 {% endfor %}
                             </div>
-                        {% elif trades| len == 0 %}
+                        {% elif trades != None and trades|length == 0 %}
                             <p class="trades-none">No trades yet.</p>
                         {% else %}
                             <p class="trade-tracker-unavailable">Trade tracker unavailable for previous seasons.</p>

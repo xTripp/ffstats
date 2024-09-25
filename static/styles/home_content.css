@@ -141,7 +141,7 @@ select:focus {
 
 .trade-tracker-unavailable,
 .trades-none {
-    padding-top: 20px;
+    padding: 20px;
     text-align: center;
     font-size: 1.6rem;
 }

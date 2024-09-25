@@ -100,60 +100,68 @@ def _name_builder(owners):
         return f"{owners[0]['firstName']} {owners[0]['lastName']} and {owners[1]['firstName']} {owners[1]['lastName']}"
     else:
         return f"{', '.join(owner['firstName'] + ' ' + owner['lastName'] for owner in owners[:-1])}, and {owners[-1]['firstName']} {owners[-1]['lastName']}"
-    
+
+"""
+This function is responsible for gathering all trades within the given season and passing a dictionary of every trade with information of the assets traded.
+
+Returns:
+    trades (dict): A dict keyed by the formatted trade date and the value of another dict containing the week the trade occurred, the assets given from both sides of the trade as well as the points each asset scored since the trade date. The actions attribute of the trade is also passed for extra information
+"""
 def get_trades():
     trades = {}
-    
-    for trade in league.recent_activity(size=1000, msg_type="TRADED"):
-        trade_week = _get_week(trade.date)
 
-        team1 = trade.actions[0][0]
-        team2 = trade.actions[-1][0]
-        
-        # Get assets for both teams based on trade actions
-        team_assets = {
-            'team1_assets': [asset[2] for asset in trade.actions if asset[0].team_name == team1.team_name],
-            'team2_assets': [asset[2] for asset in trade.actions if asset[0].team_name == team2.team_name]
-        }
+    # If the season selected is not the current season, this will error out and say the league does not exist. In that case, return trades as None type
+    try:
+        for trade in league.recent_activity(size=1000, msg_type="TRADED"):
+            trade_week = _get_week(trade.date)
 
-        # Calculate total points for each player from the trade week onwards
-        asset_points = {
-            'team1_assets': {
-                asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week)
-                for asset in team_assets['team1_assets']
-            },
-            'team2_assets': {
-                asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week)
-                for asset in team_assets['team2_assets']
+            team1 = trade.actions[0][0]
+            team2 = trade.actions[-1][0]
+            
+            team1_assets = [asset[2] for asset in trade.actions if asset[0].team_name == team1.team_name]
+            team2_assets = [asset[2] for asset in trade.actions if asset[0].team_name == team2.team_name]
+
+            # Calculate total points for each player from the trade week onwards
+            team1_points = {asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week) for asset in team1_assets}
+            team2_points = {asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week) for asset in team2_assets}
+
+            # Format the trade date as a human-readable string
+            trade_date = datetime.fromtimestamp(trade.date / 1000).strftime("%B %d, %Y %I:%M %p")
+            
+            # Assets and points are backwards to place the received assets on the correct side
+            trades[trade_date] = {
+                'week': trade_week,
+                'team1_assets': team2_assets,
+                'team2_assets': team1_assets,
+                'team1_points': team2_points,
+                'team2_points': team1_points,
+                'actions': trade.actions
             }
-        }
-
-        # Format the trade date as a human-readable string
-        trade_date = datetime.fromtimestamp(trade.date / 1000).strftime("%B %d, %Y %I:%M %p")
-        
-        # Add the trade details to the dictionary
-        # Trades are backwards to place the received assets on the correct side
-        trades[trade_date] = {
-            'week': trade_week,
-            'team1_assets': team_assets['team2_assets'],
-            'team2_assets': team_assets['team1_assets'],
-            'team1_points': asset_points['team2_assets'],
-            'team2_points': asset_points['team1_assets'],
-            'actions': trade.actions
-        }
+    except:
+        return None
 
     return trades
 
+"""
+Gets the week for and action in any given season since 2002
+
+Parameters:
+    time (int): epoch time for the action to get the week of
+
+Retruns:
+    week (int): week of the action
+"""
 def _get_week(time):
     season_start_in_seconds = nfl_start_dates[str(league.year)] / 1000
-    trade_time_in_seconds = time / 1000
+    action_time_in_seconds = time / 1000
 
-    season_start = datetime.fromtimestamp(season_start_in_seconds)
-    trade_time = datetime.fromtimestamp(trade_time_in_seconds)
+    season_start_time = datetime.fromtimestamp(season_start_in_seconds)
+    action_time = datetime.fromtimestamp(action_time_in_seconds)
 
-    if trade_time < season_start:
+    # if the action time is before the first week, it will return 0th week
+    if action_time < season_start_time:
         return 0
 
-    delta = trade_time - season_start
+    delta = action_time - season_start_time
 
     return (delta.days // 7) + 1

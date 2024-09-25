@@ -1,5 +1,6 @@
 import api
 from flask import Flask, render_template, request
+from datetime import datetime
 
 # Ideas:
 # Power rankings graph to display week by week
@@ -34,7 +35,7 @@ def home():
 # When a different season is selected this route is used to generate a new home page with the updated information
 @app.route('/<int:year>')
 def season_select(year):
-    current_year = api.league.year
+    current_year = datetime.now().year
     api.league = api.get_league(year)
     return render_template(
         'home.html',
@@ -45,7 +46,8 @@ def season_select(year):
         team_count=api.get_league_num_teams(),
         previous_winner=api.get_league_previous_winner(),
         current_week=api.league.current_week,
-        power_rankings=api.get_league_power_rankings()
+        power_rankings=api.get_league_power_rankings(),
+        trades=api.get_trades()
     )
 
 # This route is used when the user clicks the load leaderboards button to fetch the league stats
