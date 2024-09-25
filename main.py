@@ -1,6 +1,10 @@
+import logging
 import api
 from flask import Flask, render_template, request
 from datetime import datetime
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Ideas:
 # Power rankings graph to display week by week
@@ -14,11 +18,22 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+# Log that the app has started
+logging.debug("Flask app initialized and starting")
+
 # root route
 @app.route('/')
 def home():
+    logging.debug("Entered '/' route")
+    logging.debug("Fetching league data")
     api.league = api.get_league()
+    
     current_year = api.league.year
+    logging.debug(f"Current year: {current_year}")
+    
+    # Log before rendering the template
+    logging.debug("Rendering home.html template")
+    
     return render_template(
         'home.html',
         name=api.get_league_name(),
@@ -35,8 +50,17 @@ def home():
 # When a different season is selected this route is used to generate a new home page with the updated information
 @app.route('/<int:year>')
 def season_select(year):
+    logging.debug(f"Entered '/<int:year>' route with year: {year}")
+    
     current_year = datetime.now().year
+    logging.debug(f"Current year (system): {current_year}")
+    
+    logging.debug("Fetching league data for selected year")
     api.league = api.get_league(year)
+    
+    # Log before rendering the template
+    logging.debug(f"Rendering home.html for year: {year}")
+    
     return render_template(
         'home.html',
         name=api.get_league_name(),
@@ -53,17 +77,22 @@ def season_select(year):
 # This route is used when the user clicks the load leaderboards button to fetch the league stats
 @app.route('/load_leaderboards')
 def load_leaderboard():
-    api.league = api.get_league(request.args.get('year', type=int))
+    logging.debug("Entered '/load_leaderboards' route")
+    
+    selected_year = request.args.get('year', type=int)
+    logging.debug(f"Fetching league data for year: {selected_year}")
+    
+    api.league = api.get_league(selected_year)
+    
+    # Log before rendering the leaderboard
+    logging.debug("Rendering _leaderboards.html template")
+    
     return render_template(
         '_leaderboards.html',
         stats=api.get_league_stats(),
         owners=api.get_league_owners()
     )
 
-# Health check route
-@app.route('/health')
-def health_check():
-    return "OK", 200
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    logging.debug("Running app with debug=True")
+    app.run(host='0.0.0.0', debug=True)
