@@ -108,13 +108,13 @@
                         <!-- Trade Tracker-->
                         <p class="trade-tracker-header">Trade Tracker</p>
                         {% if selected_season == current_year %}
-                            <div>
-                                {% for trade_date, trade_data in trades.items() %}
+                            {% for trade_date, trade_data in trades.items() %}
+                                <div class="trade" data-epoch="{{ trade_date }}">
                                     {% with trade_date=trade_date, trade_data=trade_data %}
                                         {% include "_trade_box.html" %}
                                     {% endwith %}
-                                {% endfor %}
-                            </div>
+                                </div>
+                            {% endfor %}
                         {% elif trades != None and trades|length == 0 %}
                             <p class="trades-none">No trades yet.</p>
                         {% else %}

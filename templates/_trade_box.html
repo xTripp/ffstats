@@ -7,7 +7,7 @@
     {% set team2_total_points = (trade_data["team2_points"].values() | map('float') | sum)%}
     {% set total_points = team1_total_points + team2_total_points | round(2) %}
 
-    <div class="trade-header">{{ trade_date }} (Week {{trade_data["week"]}})</div>
+    <div class="trade-header"><span class="trade-time"></span> (Week {{trade_data["week"]}})</div>
     <div class="trade-content">
         <div class="trade-team">
             <img class="trade-team-logo" src="{{ team1.logo_url }}"/>

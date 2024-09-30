@@ -59,3 +59,20 @@ document.addEventListener("click", function(event) {
             });
     }
 });
+
+// Translate trade time from UTC to the user's local time
+document.querySelectorAll(".trade").forEach(tradeElement => {
+    const epochTime = parseInt(tradeElement.getAttribute("data-epoch"));
+    const date = new Date(epochTime);  // Convert epoch to a Date object
+    const options = {
+        month: 'long',     // Full month name
+        day: '2-digit',    // 2-digit day
+        year: 'numeric',   // Full year
+        hour: 'numeric',   // Hour
+        minute: '2-digit', // Minute with leading zero
+        hour12: true       // AM/PM format
+    };
+
+    const localTime = date.toLocaleString('en-US', options);  // Convert to local time with format
+    tradeElement.querySelector(".trade-time").innerHTML = localTime
+});

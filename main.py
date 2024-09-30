@@ -15,13 +15,15 @@ logging.basicConfig(level=logging.DEBUG)
 # Live stat command center for live data
 # Support tracking other leagues
 
+# TODO fix mobile formatting for trade tracker
+
 app = Flask(__name__)
 logging.debug("Flask app initialized and starting")
 
 # root route
 @app.route('/')
 def home():
-    logging.debug("Entered '/' route")
+    logging.debug("Entered root route")
     logging.debug("Fetching league data")
     api.league = api.get_league()
     
@@ -90,7 +92,8 @@ def load_leaderboard():
 # This route is used for render's health checks to prevent it from DOS attacking my site
 @app.route('/health')
 def health_check():
+    logging.debug("Entered '/health' route")
     return {'status': 'ok'}
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)

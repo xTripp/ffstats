@@ -105,7 +105,7 @@ def _name_builder(owners):
 This function is responsible for gathering all trades within the given season and passing a dictionary of every trade with information of the assets traded.
 
 Returns:
-    trades (dict): A dict keyed by the formatted trade date and the value of another dict containing the week the trade occurred, the assets given from both sides of the trade as well as the points each asset scored since the trade date. The actions attribute of the trade is also passed for extra information
+    trades (dict): A dict keyed by the trade date in epoch (ms) time in UTC and the value of another dict containing the week the trade occurred, the assets given from both sides of the trade as well as the points each asset scored since the trade date. The actions attribute of the trade is also passed for extra information
 """
 def get_trades():
     trades = {}
@@ -113,32 +113,35 @@ def get_trades():
     # If the season selected is not the current season, this will error out and say the league does not exist. In that case, return trades as None type
     try:
         for trade in league.recent_activity(size=1000, msg_type="TRADED"):
+            actions = sorted(trade.actions, key=lambda x: x[0].team_name)
+            print(trade, trade.date)
             trade_week = _get_week(trade.date)
 
-            team1 = trade.actions[0][0]
-            team2 = trade.actions[-1][0]
+            team1 = actions[0][0]
+            team2 = actions[-1][0]
             
-            team1_assets = [asset[2] for asset in trade.actions if asset[0].team_name == team1.team_name]
-            team2_assets = [asset[2] for asset in trade.actions if asset[0].team_name == team2.team_name]
+            team1_assets = [asset[2] for asset in actions if asset[0].team_name == team1.team_name]
+            team2_assets = [asset[2] for asset in actions if asset[0].team_name == team2.team_name]
 
             # Calculate total points for each player from the trade week onwards
             team1_points = {asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week) for asset in team1_assets}
             team2_points = {asset: sum(week.get('points', 0) for week_key, week in asset.stats.items() if week_key >= trade_week) for asset in team2_assets}
-
-            # Format the trade date as a human-readable string
-            trade_date = datetime.fromtimestamp(trade.date / 1000).strftime("%B %d, %Y %I:%M %p")
             
             # Assets and points are backwards to place the received assets on the correct side
-            trades[trade_date] = {
+            trades[trade.date] = {
                 'week': trade_week,
                 'team1_assets': team2_assets,
                 'team2_assets': team1_assets,
                 'team1_points': team2_points,
                 'team2_points': team1_points,
-                'actions': trade.actions
+                'actions': actions
             }
     except:
         return None
+    
+    # bug fix for vu being a bad commissioner, remove at end of season
+    trades.pop(1727311997623)
+    trades.pop(1727308876229)
 
     return trades
 
