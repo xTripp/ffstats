@@ -50,7 +50,7 @@
                 {% set asset_percentage = 100 / total_assets %}
             {% endif %}
             {% set background_color = team1_colors[index % team1_colors | length] %}
-            <div class="asset-score" style="width: {{ asset_percentage }}%; background-color: {{ background_color }};">{{ asset.name }}<br>{{ points }} points</div>
+            <div class="asset-score" style="width: {{ asset_percentage }}%; background-color: {{ background_color }};">{{ asset.name }}<br>{{ points|round(2) }} points</div>
         {% endfor %}
     
         <!-- Team 2 Assets -->

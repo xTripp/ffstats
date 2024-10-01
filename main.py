@@ -15,8 +15,6 @@ logging.basicConfig(level=logging.DEBUG)
 # Live stat command center for live data
 # Support tracking other leagues
 
-# TODO fix mobile formatting for trade tracker
-
 app = Flask(__name__)
 logging.debug("Flask app initialized and starting")
 
@@ -96,4 +94,4 @@ def health_check():
     return {'status': 'ok'}
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0:10000')
