@@ -22,13 +22,10 @@ logging.debug("Flask app initialized and starting")
 @app.route('/')
 def home():
     logging.debug("Entered root route")
-    logging.debug("Fetching league data")
+    logging.debug("Entered root route: User-Agent - %s", request.headers.get('User-Agent'))
     api.league = api.get_league()
     
     current_year = api.league.year
-    logging.debug(f"Current year: {current_year}")
-    
-    logging.debug("Rendering home.html template")
     
     return render_template(
         'home.html',
@@ -49,12 +46,7 @@ def season_select(year):
     logging.debug(f"Entered '/<int:year>' route with year: {year}")
     
     current_year = datetime.now().year
-    logging.debug(f"Current year (system): {current_year}")
-    
-    logging.debug("Fetching league data for selected year")
     api.league = api.get_league(year)
-    
-    logging.debug(f"Rendering home.html for year: {year}")
     
     return render_template(
         'home.html',
@@ -72,14 +64,8 @@ def season_select(year):
 # This route is used when the user clicks the load leaderboards button to fetch the league stats
 @app.route('/load_leaderboards')
 def load_leaderboard():
-    logging.debug("Entered '/load_leaderboards' route")
-    
     selected_year = request.args.get('year', type=int)
-    logging.debug(f"Fetching league data for year: {selected_year}")
-    
     api.league = api.get_league(selected_year)
-    
-    logging.debug("Rendering _leaderboards.html template")
     
     return render_template(
         '_leaderboards.html',
