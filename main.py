@@ -21,8 +21,13 @@ logging.debug("Flask app initialized and starting")
 # root route
 @app.route('/')
 def home():
+    user_agent = request.headers.get('User-Agent')
+    # Give user agent 'Go-http-client/1.1' an ok code instead of loading content
+    if 'Go-http-client/1.1' in user_agent:
+        logging.warning("Processed request from Go-http-client/1.1")
+        return {'status': 'ok'}
+
     logging.debug("Entered root route")
-    logging.debug("Entered root route: User-Agent - %s", request.headers.get('User-Agent'))
     api.league = api.get_league()
     
     current_year = api.league.year
@@ -66,18 +71,12 @@ def season_select(year):
 def load_leaderboard():
     selected_year = request.args.get('year', type=int)
     api.league = api.get_league(selected_year)
-    
+
     return render_template(
         '_leaderboards.html',
         stats=api.get_league_stats(),
         owners=api.get_league_owners()
     )
-
-# This route is used for render's health checks to prevent it from DOS attacking my site
-@app.route('/health')
-def health_check():
-    logging.debug("Entered '/health' route")
-    return {'status': 'ok'}
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0:10000')
