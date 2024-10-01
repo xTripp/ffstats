@@ -114,7 +114,6 @@ def get_trades():
     try:
         for trade in league.recent_activity(size=1000, msg_type="TRADED"):
             actions = sorted(trade.actions, key=lambda x: x[0].team_name)
-            print(trade, trade.date)
             trade_week = _get_week(trade.date)
 
             team1 = actions[0][0]

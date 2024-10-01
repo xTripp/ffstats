@@ -24,7 +24,7 @@ def home():
     user_agent = request.headers.get('User-Agent')
     # Give user agent 'Go-http-client/1.1' an ok code instead of loading content
     if 'Go-http-client/1.1' in user_agent:
-        logging.warning("Processed request from Go-http-client/1.1")
+        logging.debug("Processed request from Go-http-client/1.1")
         return {'status': 'ok'}
 
     logging.debug("Entered root route")
@@ -79,4 +79,4 @@ def load_leaderboard():
     )
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0:10000')
+    app.run(host='0.0.0.0', debug=True)

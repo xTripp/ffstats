@@ -47,47 +47,6 @@ select:focus {
     outline: none;
 }
 
-/* Power rankings styling */
-.power-rankings-container {
-    padding: 20px;
-    text-align: center;
-    font-family: 'Topic-Bold', Arial, sans-serif;
-    letter-spacing: 1px;
-}
-
-.power-rankings-title {
-    padding-bottom: 40px;
-    font-size: 4rem;
-}
-
-.pr-1 {
-    padding-bottom: 30px;
-    font-size: 3.5rem;
-}
-
-.pr-2 {
-    padding-bottom: 26px;
-    font-size: 3.25rem;
-}
-
-.pr-3 {
-    padding-bottom: 22px;
-    font-size: 3rem;
-}
-
-.pr-4 {
-    padding-bottom: 18px;
-    font-family: 'Topic', Arial, sans-serif;
-    font-size: 2rem;
-}
-
-.power-rankings-tip {
-    padding-top: 10px;
-    text-align: left;
-    font-family: 'Gotham', Arial, sans-serif;
-    font-size: 0.8rem;
-}
-
 /* Leaderboards section styling */
 .leaderboards-header {
     padding-top: 20px;

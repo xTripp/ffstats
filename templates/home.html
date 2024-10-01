@@ -7,6 +7,7 @@
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/icon.png') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/home_content.css') }}">
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_power_rankings.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_spinner.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_leaderboards.css') }}">
         <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='styles/_trade_box.css') }}">
@@ -62,25 +63,9 @@
 
                         <!-- Power rankings -->
                         <div class="power-rankings-container">
-                            <div class="power-rankings-title">Power Rankings (Week {{ current_week }})</div>
-                            <div class="power-rankings">
-                                {% for team in power_rankings %}
-                                    {% set index = loop.index %}
-                                    {% if index == 1 %}
-                                        <div class="pr-1">{{team[1].team_name}} ({{team[0]}})</div>
-                                    {% elif index == 2 %}
-                                        <div class="pr-2">{{team[1].team_name}} ({{team[0]}})</div>
-                                    {% elif index == 3 %}
-                                        <div class="pr-3">{{team[1].team_name}} ({{team[0]}})</div>
-                                    {% else %}
-                                        <div class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="power-rankings-tip">
-                                Power rankings are calculated using two step dominance. Individual power scores are the result of the overall outcome of your games, your opponent, and your opponent's games.<br><br>
-                                For example, if Team A beat Team B and Team B beat Team C, it can suggest Team A is stronger than Team C, even if they haven't played each other.
-                            </div>
+                            {% with current_week=current_week, power_rankings=power_rankings %}
+                                {% include "_power_rankings.html" %}
+                            {% endwith %}
                         </div>
                         <hr>
 
