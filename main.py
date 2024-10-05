@@ -7,7 +7,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Ideas:
 # Power rankings graph to display week by week
-# Power rankings podium graphics
 # Link team names to a team page with specific team stats
 # Compare 2 teams stats
 # Mini leaderboards by season, all-time, and playoffs
@@ -79,4 +78,4 @@ def load_leaderboard():
     )
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')

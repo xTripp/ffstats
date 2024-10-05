@@ -55,7 +55,25 @@
 .pr-4 {
     padding-bottom: 18px;
     font-family: 'Topic', Arial, sans-serif;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
+    word-wrap: none;
+}
+
+.pr-positive {
+    color: lime;
+    font-size: 3rem;
+    letter-spacing: -5px;
+}
+
+.pr-negative {
+    color: red;
+    font-size: 3rem;
+    letter-spacing: -5px;
+}
+
+.pr-arrow {
+    font-size: 2rem;
+    vertical-align: 15%;
 }
 
 .power-rankings-tip {

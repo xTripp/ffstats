@@ -4,18 +4,42 @@
     {% for team in power_rankings[:3] %}
         {% set index = loop.index %}
         {% if index == 1 %}
-            <div class="pr-1"><img class="pr-1-logo" src="{{ team[1].logo_url }}">{{team[1].team_name}} ({{team[0]}})</div>
+            <div class="pr-1"><img class="pr-1-logo" src="{{ team[0][1].logo_url }}">{{team[0][1].team_name}} ({{team[0][0]}})
+                {% if team[1] > 0 %}
+                    <span class="pr-positive"><span class="pr-arrow">▲</span> {{ team[1] }}</span>
+                {% elif team[1] < 0 %}
+                    <span class="pr-negative"><span class="pr-arrow">▼</span> {{ team[1]|abs }}</span>
+                {% endif %}
+            </div>
         {% elif index == 2 %}
-            <div class="pr-2"><img class="pr-2-logo" src="{{ team[1].logo_url }}">{{team[1].team_name}} ({{team[0]}})</div>
+            <div class="pr-2"><img class="pr-2-logo" src="{{ team[0][1].logo_url }}">{{team[0][1].team_name}} ({{team[0][0]}})
+                {% if team[1] > 0 %}
+                    <span class="pr-positive"><span class="pr-arrow">▲</span> {{ team[1] }}</span>
+                {% elif team[1] < 0 %}
+                    <span class="pr-negative"><span class="pr-arrow">▼</span> {{ team[1]|abs }}</span>
+                {% endif %}
+            </div>
         {% else %}
-            <div class="pr-3"><img class="pr-3-logo" src="{{ team[1].logo_url }}">{{team[1].team_name}} ({{team[0]}})</div>
+            <div class="pr-3"><img class="pr-3-logo" src="{{ team[0][1].logo_url }}">{{team[0][1].team_name}} ({{team[0][0]}})
+                {% if team[1] > 0 %}
+                    <span class="pr-positive"><span class="pr-arrow">▲</span> {{ team[1] }}</span>
+                {% elif team[1] < 0 %}
+                    <span class="pr-negative"><span class="pr-arrow">▼</span> {{ team[1]|abs }}</span>
+                {% endif %}
+            </div>
         {% endif %}
     {% endfor %}
 </div>
 <div class="power-rankings">
     {% for team in power_rankings[3:] %}
         {% set index = loop.index + 3 %}
-        <div class="pr-4">{{index}}. {{team[1].team_name}} ({{team[0]}})</div>
+        <div class="pr-4">{{index}}. {{team[0][1].team_name}} ({{team[0][0]}})
+            {% if team[1] > 0 %}
+                <span class="pr-positive"><span class="pr-arrow">▲</span> {{ team[1] }}</span>
+            {% elif team[1] < 0 %}
+                <span class="pr-negative"><span class="pr-arrow">▼</span> {{ team[1]|abs }}</span>
+            {% endif %}
+        </div>
     {% endfor %}
 </div>
 <div class="power-rankings-tip">

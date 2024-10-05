@@ -60,7 +60,7 @@ def get_league_previous_winner():
             return (team.team_name, (team.wins, team.ties, team.losses))
 
 """
-Returns (list[tuple]) the power rankings for any week
+Returns (list[tuple]) the power rankings for any week. Each tuple is ()
 
 Parameters: 
     week (int): selects the week of data to get. Defaults to current week if not provided
@@ -69,7 +69,26 @@ def get_league_power_rankings(week=None):
     if week == None:
         week = league.current_week
 
-    return league.power_rankings(week)
+def get_league_power_rankings(week=None):
+    if week is None:
+        week = league.current_week
+
+    # This appends the rank change week over week to the owner's power ranking score
+    # The try/except block will prevent an error if its Week 0 and it is checking for a week before that
+    try:
+        previous_week = league.power_rankings(week - 1)
+        current_week = league.power_rankings(week)
+        
+        for i, (_, current_team) in enumerate(current_week):
+            # get previous rank and calculate the change if any
+            previous_team_rank = next((j for j, (_, team) in enumerate(previous_week) if team == current_team), None)
+            rank_change = previous_team_rank - i
+            
+            current_week[i] = [current_week[i], rank_change]
+
+        return current_week
+    except:
+        return league.power_rankings(week)
 
 """
 Returns (dict) of dicts where each is a leaderboard for a different stat. See leaderboardBuilder class for specific information on stat fields
