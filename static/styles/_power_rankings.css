@@ -114,4 +114,23 @@
         top: 20%;
         left: 58%;
     }
+
+    .pr-4 {
+        font-size: 2.5rem;
+        word-wrap: none;
+    }
+
+    .pr-positive {
+        font-size: 2.5rem;
+        letter-spacing: -3px;
+    }
+    
+    .pr-negative {
+        font-size: 2.5rem;
+        letter-spacing: -3px;
+    }
+    
+    .pr-arrow {
+        font-size: 1.5rem;
+    }
 }
