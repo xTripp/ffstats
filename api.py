@@ -66,24 +66,20 @@ Parameters:
     week (int): selects the week of data to get. Defaults to current week if not provided
 """
 def get_league_power_rankings(week=None):
-    if week == None:
-        week = league.current_week
-
-def get_league_power_rankings(week=None):
     if week is None:
         week = league.current_week
 
     # This appends the rank change week over week to the owner's power ranking score
     # The try/except block will prevent an error if its Week 0 and it is checking for a week before that
     try:
-        previous_week = league.power_rankings(week - 1)
+        previous_week = league.power_rankings(week - 2)  # not sure why this needs to be -2 but it doesn't get the right rankings with -1
         current_week = league.power_rankings(week)
-        
+
+        # Iterate over all teams and check their rankings from the previous week to calculate rank change
         for i, (_, current_team) in enumerate(current_week):
-            # get previous rank and calculate the change if any
-            previous_team_rank = next((j for j, (_, team) in enumerate(previous_week) if team == current_team), None)
+            previous_team_rank = next(j for j, (_, team) in enumerate(previous_week) if team == current_team)
             rank_change = previous_team_rank - i
-            
+
             current_week[i] = [current_week[i], rank_change]
 
         return current_week

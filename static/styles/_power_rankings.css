@@ -39,7 +39,7 @@
 
 .pr-1 {
     top: 0;
-    left: 40%;
+    left: 38%;
 }
 
 .pr-2 {
@@ -60,7 +60,7 @@
 }
 
 .pr-positive {
-    color: lime;
+    color: rgb(0, 200, 0);
     font-size: 3rem;
     letter-spacing: -5px;
 }
