@@ -1,9 +1,10 @@
 import os
 import json
 from dotenv import load_dotenv
-from datetime import datetime
+from datetime import datetime, timedelta
 from espn_api.football import League
 from leaderboardBuilder import LeaderboardBuilder
+from utils.luck_index import set_league_endpoint, get_roster_settings, get_season_luck_indices
 
 load_dotenv()
 league = League
@@ -160,6 +161,24 @@ def get_trades():
     return trades
 
 """
+Generates the league luck index for all teams
+NOTE: This currently uses a luck index calculation from (https://github.com/DesiPilla/espn-api-v3/tree/master) it is kind of ripped out and shoved into place so a little scuffed
+NOTE: Eventually I want to do my own calculations for this
+
+Parameters:
+    league (League): League object for current season
+    current_week (int): current week of the season to calculate luck index to this week
+
+Returns:
+    luck_indices (dict): A dictionary keyed by Team objects and the value is the luck index
+"""
+def get_luck_indices(league, current_week):
+    league.cookies = {"swid": os.getenv("SWID"), "espn_s2": os.getenv("ESPN_S2")}
+    set_league_endpoint(league)
+    get_roster_settings(league)
+    return get_season_luck_indices(league, current_week)
+
+"""
 Gets the week for and action in any given season since 2002
 
 Parameters:
@@ -172,7 +191,8 @@ def _get_week(time):
     season_start_in_seconds = nfl_start_dates[str(league.year)] / 1000
     action_time_in_seconds = time / 1000
 
-    season_start_time = datetime.fromtimestamp(season_start_in_seconds)
+    # subtract 1 day from season start to align with the start of the new week in ESPN Fantasy
+    season_start_time = datetime.fromtimestamp(season_start_in_seconds) - timedelta(days=1)
     action_time = datetime.fromtimestamp(action_time_in_seconds)
 
     # if the action time is before the first week, it will return 0th week

@@ -9,10 +9,15 @@ logging.basicConfig(level=logging.DEBUG)
 # Power rankings graph to display week by week
 # Link team names to a team page with specific team stats
 # Compare 2 teams stats
+# Team week grading
+# Team points pie chart by position
 # Mini leaderboards by season, all-time, and playoffs
 # Luck index
 # Live stat command center for live data
 # Support tracking other leagues
+# Draft new team or modify existing team and simulate league placement
+# Pre-load page content with buffering symbols to show loading immediately
+# Support other fantasy platforms
 
 app = Flask(__name__)
 logging.debug("Flask app initialized and starting")
@@ -75,6 +80,14 @@ def load_leaderboard():
         '_leaderboards.html',
         stats=api.get_league_stats(),
         owners=api.get_league_owners()
+    )
+
+# This route is used to load the luck indices for the current season
+@app.route('/load_luck')
+def load_luck():
+    return render_template(
+        '_luck_graph.html',
+        luck=api.get_luck_indices(api.league, api.league.current_week)
     )
 
 if __name__ == "__main__":

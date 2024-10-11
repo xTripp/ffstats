@@ -90,6 +90,27 @@
                         <div id="leaderboards-container"></div>
                         <hr>
 
+                        <!-- Loading overlay for stat luck index (Hidden) -->
+                        <p class="luck-header">Luck Index</p>
+                        <div class="luck-button-container">
+                            <button id="luck-button">Load Luck Index</button>
+                        </div>
+                        <div id="luck-loading-container">
+                            <p class="loading-luck">Loading luck index... This may take a minute</p>
+                            <div class="spinner">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+
+                        <!-- Luck Index -->
+                        <div id="luck-container"></div>
+                        <hr>
+
                         <!-- Trade Tracker-->
                         <p class="trade-tracker-header">Trade Tracker</p>
                         {% if selected_season == current_year %}

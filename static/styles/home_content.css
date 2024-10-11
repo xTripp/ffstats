@@ -73,7 +73,8 @@ select:focus {
 }
 
 #season-loading-container,
-#leaderboards-loading-container {
+#leaderboards-loading-container,
+#luck-loading-container {
     padding: 30px;
     padding-bottom: 60px;
     display: none;
@@ -83,10 +84,36 @@ select:focus {
 }
 
 #loading-season,
-.loading-leaderboards {
+.loading-leaderboards,
+.loading-luck {
     padding: 30px 0px;
     font-size: 2rem;
 
+}
+
+/* Luck index section styling */
+.luck-header {
+    padding-top: 20px;
+    font-family: 'Topic-Bold', Arial, sans-serif;
+    text-align: center;
+    font-size: 4rem;
+    letter-spacing: 1px;
+}
+
+.luck-button-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 50px;
+}
+
+#luck-button {
+    width: fit-content;
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /** Trade tracker */

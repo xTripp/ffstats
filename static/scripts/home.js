@@ -21,6 +21,9 @@ document.addEventListener("change", function(event) {
 
                 // Hide all loading elements after data is loaded
                 document.getElementById("season-loading-container").style.display = "none";
+
+                // When page content is loaded, attempt to set trade times
+                setTradeTimes();
             })
             .catch(error => {
                 document.documentElement.innerHTML = `
@@ -60,19 +63,48 @@ document.addEventListener("click", function(event) {
     }
 });
 
-// Translate trade time from UTC to the user's local time
-document.querySelectorAll(".trade").forEach(tradeElement => {
-    const epochTime = parseInt(tradeElement.getAttribute("data-epoch"));
-    const date = new Date(epochTime);  // Convert epoch to a Date object
-    const options = {
-        month: 'long',     // Full month name
-        day: '2-digit',    // 2-digit day
-        year: 'numeric',   // Full year
-        hour: 'numeric',   // Hour
-        minute: '2-digit', // Minute with leading zero
-        hour12: true       // AM/PM format
-    };
+// Handle the load luck button's load sequence
+document.addEventListener("click", function(event) {
+    if (event.target && event.target.id === 'luck-button') {
+        // Hide the load leaderboards button and show loading elements
+        event.target.parentNode.style.display = "none";
+        document.getElementById("luck-loading-container").style.display = "flex";
 
-    const localTime = date.toLocaleString('en-US', options);  // Convert to local time with format
-    tradeElement.querySelector(".trade-time").innerHTML = localTime
+        // Fetch data and populate the container, then hide loading elements
+        fetch(`/load_luck`)
+            .then(response => response.text())
+            .then(data => {
+                // Load leaderboards data into page
+                document.getElementById("luck-container").innerHTML = data;
+
+                // Hide loading elements after data is loaded
+                document.getElementById("luck-loading-container").style.display = "none";
+            })
+            .catch(error => {
+                document.getElementById("luck-container").innerHTML = `
+                    <p>Something went wrong. Try again later</p>
+                    <p>Error: ${error}</p>
+                `;
+            });
+    }
 });
+
+// Translate trade time from UTC to the user's local time everytime the page is loaded
+function setTradeTimes() {
+    document.querySelectorAll(".trade").forEach(tradeElement => {
+        const epochTime = parseInt(tradeElement.getAttribute("data-epoch"));
+        const date = new Date(epochTime);  // Convert epoch to a Date object
+        const options = {
+            month: 'long',     // Full month name
+            day: '2-digit',    // 2-digit day
+            year: 'numeric',   // Full year
+            hour: 'numeric',   // Hour
+            minute: '2-digit', // Minute with leading zero
+            hour12: true       // AM/PM format
+        };
+
+        const localTime = date.toLocaleString('en-US', options);  // Convert to local time with format
+        tradeElement.querySelector(".trade-time").innerHTML = localTime;
+    });
+}
+setTradeTimes();
