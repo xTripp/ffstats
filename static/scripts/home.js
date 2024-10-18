@@ -66,16 +66,28 @@ document.addEventListener("click", function(event) {
 // Handle the load luck button's load sequence
 document.addEventListener("click", function(event) {
     if (event.target && event.target.id === 'luck-button') {
-        // Hide the load leaderboards button and show loading elements
+        // Hide the load luck index button and show loading elements
         event.target.parentNode.style.display = "none";
         document.getElementById("luck-loading-container").style.display = "flex";
 
         // Fetch data and populate the container, then hide loading elements
         fetch(`/load_luck`)
-            .then(response => response.text())
-            .then(data => {
-                // Load leaderboards data into page
-                document.getElementById("luck-container").innerHTML = data;
+            .then(response => response.blob()) // Await the blob response
+            .then(blob => {
+                // Create a URL from the image blob
+                const imgUrl = URL.createObjectURL(blob);
+
+                // Create an image element and set the src attribute to the generated URL
+                const imgElement = document.createElement("img");
+                imgElement.src = imgUrl;
+                imgElement.alt = "Luck Index";
+                imgElement.style.padding = "5px";
+                imgElement.style.border = "3px solid black";
+
+                // Add the image to the container
+                const luckContainer = document.getElementById("luck-container");
+                luckContainer.appendChild(imgElement);
+                luckContainer.style.padding = "10px";
 
                 // Hide loading elements after data is loaded
                 document.getElementById("luck-loading-container").style.display = "none";

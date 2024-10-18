@@ -92,9 +92,13 @@
 
                         <!-- Loading overlay for stat luck index (Hidden) -->
                         <p class="luck-header">Luck Index</p>
-                        <div class="luck-button-container">
-                            <button id="luck-button">Load Luck Index</button>
-                        </div>
+                        {% if selected_season == current_year %}
+                            <div class="luck-button-container">
+                                <button id="luck-button">Load Luck Index</button>
+                            </div>
+                        {% else %}
+                            <p class="feature-unavailable">Luck index unavailable for previous seasons.</p>
+                        {% endif %}
                         <div id="luck-loading-container">
                             <p class="loading-luck">Loading luck index... This may take a minute</p>
                             <div class="spinner">
@@ -109,6 +113,19 @@
 
                         <!-- Luck Index -->
                         <div id="luck-container"></div>
+                        <div class="luck-index-tip">
+                            The luck index builds a comprehensive view of how much of a team's success or failure can be attributed to luck rather than skill or decision making. A higher luck index indicates more favorable circumstances that helped the team while a lower index reflects unfavorable conditions<br><br>
+                            Current factors of the luck index include:<br>
+                            <ol class="luck-index-tip-factors">
+                                <li><b>Scheduling <u>(Weighted 30%)</u></b> Evaluates the difficulty of a team's matchups in a given week. Playing weaker teams suggests luck while tougher opponents imply unluckiness</li>
+                                <li><b>Performace vs. Historical Average <u>(Weighted 10%)</u></b>  Compares a team's score to their usual performance. Scoring much higher than average suggests luck while scoring lower indicates bad luck</li>
+                                <li><b>Margin of victory <u>(Weighted 25%)</u></b> Measures how much a team won or lost by. A narrow win suggests luck, while a decisive win implies dominance</li>
+                                <li><b>Performance vs. Projections <u>(Weighted 10%)</u></b>: Measures a team's actual performance compared to their projections. Overperforming suggests luck, while underperforming implies the opposite</li>
+                                <li><b>Injury/Bye Factor <u>(Weighted 10%)</u></b>: Considers the impact of unavailable players. Winning despite injuries or byes is seen as lucky</li>
+                                <li><b>Optimal vs. Actual Lineup <u>(Weighted 10%)</u></b>: Analyzes if a team could have done better with a different lineup. Losing despite using the best lineup suggests bad luck, while winning because the opponent didn't set their best lineup indicates luck</li>
+                                <li><b>Optimal vs. Optimal Lineup <u>(Weighted 5%)</u></b>: Compares the best lineups for both teams. Winning when both teams used their best lineups indicates skill, while winning despite not being optimal suggests luck</li>
+                            </ol>
+                        </div>
                         <hr>
 
                         <!-- Trade Tracker-->
@@ -124,14 +141,8 @@
                         {% elif trades != None and trades|length == 0 %}
                             <p class="trades-none">No trades yet.</p>
                         {% else %}
-                            <p class="trade-tracker-unavailable">Trade tracker unavailable for previous seasons.</p>
+                            <p class="feature-unavailable">Trade tracker unavailable for previous seasons.</p>
                         {% endif %}
-                        <hr>
-
-                        <!-- Under contruction area -->
-                        <div class="under-construction">
-                            More is coming... check for updates in the next few days
-                        </div>
                     </div>
                 </div>
             </div>

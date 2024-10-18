@@ -1,7 +1,12 @@
 import os
 import json
+import io
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
+from flask import send_file
 from espn_api.football import League
 from leaderboardBuilder import LeaderboardBuilder
 from utils.luck_index import set_league_endpoint, get_roster_settings, get_season_luck_indices
@@ -176,7 +181,15 @@ def get_luck_indices(league, current_week):
     league.cookies = {"swid": os.getenv("SWID"), "espn_s2": os.getenv("ESPN_S2")}
     set_league_endpoint(league)
     get_roster_settings(league)
-    return get_season_luck_indices(league, current_week)
+    luck_indices = dict(sorted(get_season_luck_indices(league, current_week).items(), key=lambda item: float(item[1])))
+
+    # Convert Team objects to strings for the x-axis labels
+    teams = [team.team_name for team in luck_indices.keys()]
+    values = list(luck_indices.values())
+
+    img = _generate_luck_graph(teams, values)
+
+    return send_file(img, mimetype='image/png')
 
 """
 Gets the week for and action in any given season since 2002
@@ -202,3 +215,44 @@ def _get_week(time):
     delta = action_time - season_start_time
 
     return (delta.days // 7) + 1
+
+def _generate_luck_graph(teams, values):
+    plt.style.use('seaborn-v0_8-dark')
+    
+    # Create the bar plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Define the y-axis limits to show from -1.25 to 1.25
+    ax.set_ylim(-1.25, 1.25)
+
+    # Draw bars, where bars below 0 will be displayed downwards, and above 0 upwards
+    bars = ax.bar(teams, values, color=['#FF6F61' if v < 0 else '#6BAED6' for v in values], edgecolor='black')
+
+    # Add a horizontal line at y=0
+    ax.axhline(0, color='black', linewidth=1.2)
+
+    # Rotate x-axis labels for better readability
+    plt.xticks(rotation=45, ha='right', fontsize=10)
+    ax.xaxis.set_tick_params(pad=20)
+
+    # Set axis labels
+    ax.set_ylabel('Luck Index', fontsize=12, weight='bold')
+
+    # Enable horizontal grid lines only
+    ax.yaxis.grid(True, which='major', linestyle='--', linewidth=0.5, alpha=0.7, color="black")
+
+    # Add labels on top of bars
+    for bar, value in zip(bars, values):
+        height = bar.get_height()
+        ax.annotate(f'{value:.2f}', xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 5 if height >= 0 else -15),  # Position above/below the bar
+                    textcoords="offset points", ha='center', va='bottom' if height >= 0 else 'top', fontsize=9)
+
+    # Save the plot to a BytesIO object with a transparent background
+    img = io.BytesIO()
+    plt.tight_layout(pad=2)
+    plt.savefig(img, format='png', transparent=True)  # Set transparent=True for transparent background
+    plt.close(fig)  # Close the figure to release memory
+    img.seek(0)
+
+    return img

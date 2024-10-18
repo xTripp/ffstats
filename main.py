@@ -1,6 +1,6 @@
 import logging
 import api
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from datetime import datetime
 
 logging.basicConfig(level=logging.DEBUG)
@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.DEBUG)
 # Team points pie chart by position
 # Mini leaderboards by season, all-time, and playoffs
 # Luck index
+# Trade deadline
 # Live stat command center for live data
 # Support tracking other leagues
 # Draft new team or modify existing team and simulate league placement
@@ -82,13 +83,10 @@ def load_leaderboard():
         owners=api.get_league_owners()
     )
 
-# This route is used to load the luck indices for the current season
+# This route is used to load the luck indices graph for the current season
 @app.route('/load_luck')
 def load_luck():
-    return render_template(
-        '_luck_graph.html',
-        luck=api.get_luck_indices(api.league, api.league.current_week)
-    )
+    return api.get_luck_indices(api.league, api.league.current_week)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

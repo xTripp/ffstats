@@ -116,6 +116,26 @@ select:focus {
     cursor: pointer;
 }
 
+#luck-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.luck-index-tip {
+    width: 95%;
+    padding-top: 10px;
+    padding-left: 20px;
+    text-align: left;
+    font-family: 'Gotham', Arial, sans-serif;
+    font-size: 0.8rem;
+}
+
+.luck-index-tip-factors {
+    line-height: 1.5rem;
+    padding-left: 40px;
+}
+
 /** Trade tracker */
 .trade-tracker-header {
     padding-top: 20px;
@@ -125,19 +145,11 @@ select:focus {
     letter-spacing: 1px;
 }
 
-.trade-tracker-unavailable,
+.feature-unavailable,
 .trades-none {
     padding: 20px;
     text-align: center;
     font-size: 1.6rem;
-}
-
-/* Under construction area */
-.under-construction {
-    padding: 30px;
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: bold;
 }
 
 /* Optimize page for smaller viewports */
